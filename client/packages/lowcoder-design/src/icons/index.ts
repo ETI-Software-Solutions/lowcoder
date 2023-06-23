@@ -189,6 +189,7 @@ export { ReactComponent as HomeListIcon } from "./icon-application-list.svg";
 export { ReactComponent as HomeCardIcon } from "./icon-application-card.svg";
 export { ReactComponent as CarouselCompIcon } from "./icon-carousel.svg";
 export { ReactComponent as MysqlIcon } from "./icon-query-MySQL.svg";
+export { ReactComponent as InformixIcon } from "./icon-query-Informix.svg";
 export { ReactComponent as DataResponderIcon } from "./icon-query-data-responder.svg";
 export { ReactComponent as MongoIcon } from "./icon-query-MongoDB.svg";
 export { ReactComponent as RestApiIcon } from "./icon-query-API.svg";

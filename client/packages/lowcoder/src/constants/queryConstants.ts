@@ -29,7 +29,8 @@ export type DatasourceType =
   | "googleSheets"
   | "graphql"
   | "snowflake"
-  | "mariadb";
+  | "mariadb"
+  | "informix";
 
 export type ResourceType = DatasourceType | "js" | "libraryQuery" | "view";
 
@@ -52,6 +53,7 @@ export const QueryMap = {
   graphql: GraphqlQuery,
   snowflake: SQLQuery,
   mariadb: SQLQuery,
+  informix: SQLQuery
 };
 
 export const JsPluginQueryMap: Record<string, MultiCompConstructor> = {};

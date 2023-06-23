@@ -31,6 +31,12 @@ public class ConfigCenterImpl implements ConfigCenter {
     public ConfigInstance mysqlPlugin() {
         return getInstance("mysqlPlugin");
     }
+    
+    @Override
+    public ConfigInstance informixPlugin() {
+        return getInstance("informixPlugin");
+    }
+
 
     @Override
     public ConfigInstance clickHousePlugin() {

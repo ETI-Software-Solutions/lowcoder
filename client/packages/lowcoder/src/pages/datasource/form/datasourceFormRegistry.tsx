@@ -29,6 +29,7 @@ export type DatasourceFormManifest = {
 };
 
 export const DatasourceFormRegistry: Partial<Record<DatasourceType, DatasourceFormManifest>> = {
+  informix: { form: sqlDatasourceForm({ placeholder: "My Informix", port: "9000" }), whitelist: true },
   mysql: { form: sqlDatasourceForm({ placeholder: "My MySQL1", port: "3306" }), whitelist: true },
   mongodb: { form: MongoDatasourceForm, whitelist: true },
   postgres: {

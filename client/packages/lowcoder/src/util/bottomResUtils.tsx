@@ -15,6 +15,7 @@ import {
   MongoIcon,
   MSSQLIcon,
   MysqlIcon,
+  InformixIcon,
   LowcoderQueryIcon,
   OptionsApiIcon,
   OracleIcon,
@@ -105,6 +106,8 @@ export const getBottomResIcon = (
         return <FileFolderIcon />;
       case "mysql":
         return <MysqlIcon />;
+      case "informix":
+        return <InformixIcon />;
       case "mongodb":
         return <MongoIcon />;
       case "restApi":

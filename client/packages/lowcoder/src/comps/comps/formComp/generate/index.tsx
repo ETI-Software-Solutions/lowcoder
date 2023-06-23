@@ -2,6 +2,7 @@ import { DataSourceTypeConfig } from "./dataSourceCommon";
 import { msSqlConfig } from "./mssql";
 import { mysqlConfig } from "./mysql";
 import { oracleSqlConfig } from "./oracle";
+import { informixSqlConfig } from "./informix";
 import { postgreSqlConfig } from "./postgresql";
 import { DatasourceType } from "@lowcoder-ee/constants/queryConstants";
 
@@ -18,6 +19,8 @@ export function getDataSourceTypeConfig(
         return msSqlConfig;
       case "oracle":
         return oracleSqlConfig;
+      case "informix":
+        return informixSqlConfig;
     }
   }
 }

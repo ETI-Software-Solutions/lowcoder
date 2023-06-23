@@ -62,6 +62,15 @@ public class DatasourceMetaInfoServiceImpl implements DatasourceMetaInfoService 
             .hasStructureInfo(true)
             .connectionPool(ClientBasedConnectionPool.class)
             .build();
+            
+    private static final DatasourceMetaInfo INFORMIX = DatasourceMetaInfo.builder()
+            .type("informix")
+            .displayName("Informix")
+            .pluginExecutorKey("informix-plugin")
+            .hasStructureInfo(true)
+            .connectionPool(ClientBasedConnectionPool.class)
+            .build();
+
 
     private static final DatasourceMetaInfo LOWCODER_API = DatasourceMetaInfo.builder()
             .type(DatasourceMetaInfoConstants.LOWCODER_API)

@@ -26,6 +26,11 @@ public class ConfigCenterForTest implements ConfigCenter {
     public ConfigInstance mysqlPlugin() {
         return new StaticConfigInstanceImpl(overrideKeyValues);
     }
+    
+        @Override
+    public ConfigInstance informixPlugin() {
+        return new StaticConfigInstanceImpl(overrideKeyValues);
+    }
 
     @Override
     public ConfigInstance clickHousePlugin() {

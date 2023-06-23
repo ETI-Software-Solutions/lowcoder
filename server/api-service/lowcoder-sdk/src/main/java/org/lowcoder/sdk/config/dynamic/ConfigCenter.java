@@ -5,6 +5,8 @@ public interface ConfigCenter {
     ConfigInstance asset();
 
     ConfigInstance mysqlPlugin();
+    
+    ConfigInstance informixPlugin();
 
     ConfigInstance clickHousePlugin();
 

@@ -553,6 +553,18 @@ TableTmpComp = withMethodExposing(TableTmpComp, [
       comp.children.selection.children.selectedRowKeys.dispatchChangeValueAction([]);
     },
   },
+  {
+    method: {
+      name: "setSelections",
+      description: "",
+      params: [
+        { name: "rowIds", type: "JSON" }
+      ],
+    },
+    execute: (comp, values) => {
+      comp.children.selection.children.selectedRowKeys.dispatchChangeValueAction(values[0] as string []);
+    }
+  }
 ]);
 
 // exposing data

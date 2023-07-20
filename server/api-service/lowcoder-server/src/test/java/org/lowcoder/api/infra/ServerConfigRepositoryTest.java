@@ -1,10 +1,7 @@
 package org.lowcoder.api.infra;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.ImmutableList;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lowcoder.infra.config.model.ServerConfig;
@@ -15,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,7 +35,7 @@ public class ServerConfigRepositoryTest {
         Conf<List<Integer>> test2 = configInstance.ofList("key2", ImmutableList.of(1), Integer.class);
         Conf<SomeClass> test3 = configInstance.ofJson("key3", SomeClass.class, new SomeClass(11, 22));
 
-        assertEquals(0, test1.get());
+        assertEquals(0, test1.get().intValue());
         assertEquals(ImmutableList.of(1), test2.get());
         assertEquals(new SomeClass(11, 22), test3.get());
 
@@ -46,7 +44,7 @@ public class ServerConfigRepositoryTest {
         configRepository.save(getNewConfig("key3", Map.of("x", 22, "y", 33))).block();
         Thread.sleep(3000);
 
-        assertEquals(123, test1.get());
+        assertEquals(123, test1.get().intValue());
         assertEquals(ImmutableList.of(1, 2), test2.get());
         assertEquals(new SomeClass(22, 33), test3.get());
 
@@ -56,7 +54,7 @@ public class ServerConfigRepositoryTest {
 
         Thread.sleep(3000);
 
-        assertEquals(12345, test1.get());
+        assertEquals(12345, test1.get().intValue());
         assertEquals(ImmutableList.of(1, 2, 3), test2.get());
         assertEquals(new SomeClass(33, 44), test3.get());
 

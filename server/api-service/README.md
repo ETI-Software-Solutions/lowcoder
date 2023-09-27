@@ -11,10 +11,10 @@ Java - OpenJDK 17 Maven - Version 3+ (preferably 3.8+)
 If you don't have an available MongoDB, you can start a local MongoDB service with docker:
 
 ```shell
-docker run -d  --name openblocks-mongodb -p 27017:27017 -e MONGO_INITDB_DATABASE=openblocks mongo
+docker run -d  --name lowcoder-mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=lowcoder -e MONGO_INITDB_ROOT_PASSWORD=lowcoder -e MONGO_INITDB_DATABASE=lowcoder mongo
 ```
 
-Configure the MongoDB connection URI in the application-openblocks.yml
+Configure the MongoDB connection URI in the application-lowcoder.yml
 <img src="../../docs/.gitbook/assets/server-setup-image1.png"/>
 
 ### Redis
@@ -22,10 +22,10 @@ Configure the MongoDB connection URI in the application-openblocks.yml
 If you don't have an available MongoDB, you can start a local Redis service with docker:
 
 ```shell
-docker run -d --name openblocks-redis -p 6379:6379 redis
+docker run -d --name lowcoder-redis -p 6379:6379 redis
 ```
 
-Configure the Redis connection URI in the application-openblocks.yml
+Configure the Redis connection URI in the application-lowcoder.yml
 <img src="../../docs/.gitbook/assets/server-setup-image2.png"/>
 
 ## Build and start the Lowcoder server jar
@@ -34,9 +34,8 @@ Configure the Redis connection URI in the application-openblocks.yml
 2. Next, execute the following commands in sequence
 
 ```shell
-cd server
 mvn clean package
-java -Dpf4j.mode=development -Dspring.profiles.active=openblocks -Dpf4j.pluginsDir=openblocks-plugins -jar openblocks-server/target/openblocks-server-1.0-SNAPSHOT.jar
+java -Dpf4j.mode=development -Dspring.profiles.active=lowcoder -Dpf4j.pluginsDir=lowcoder-plugins -jar lowcoder-server/target/openblocks-server-2.0.1-SNAPSHOT.jar
 ```
 
 <img src="../../docs/.gitbook/assets/server-setup-start.gif"/>
@@ -73,7 +72,6 @@ IDEA 2021.3.2 (Community Edition):
 Next, execute the following commands in sequence
 
 ```shell
-cd server
 mvn clean package
 ```
 

@@ -1,5 +1,5 @@
-import { withTheme } from '@rjsf/core';
-import { RJSFValidationError, ErrorListProps, UISchemaSubmitButtonOptions } from "@rjsf/utils";
+import { withTheme } from '@etisoftware/rjsf-core';
+import { RJSFValidationError, ErrorListProps, UISchemaSubmitButtonOptions } from "@etisoftware/rjsf-utils";
 import validator from "@rjsf/validator-ajv8";
 // import Ajv from "@rjsf/validator-ajv8";
 import { Button } from "antd";

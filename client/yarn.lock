@@ -1899,6 +1899,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codemirror/legacy-modes@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "@codemirror/legacy-modes@npm:0.20.0"
+  dependencies:
+    "@codemirror/language": ^0.20.0
+  checksum: 40112b045aa84efe5bc4e265513eed50d92208709a20d71624d7ef6899a6041ee82312a465cce17375257ad148687041db3b3a4f7978cb3407b6b3904c8cc0c6
+  languageName: node
+  linkType: hard
+
 "@codemirror/lint@npm:^0.20.0":
   version: 0.20.3
   resolution: "@codemirror/lint@npm:0.20.3"
@@ -2244,6 +2253,40 @@ __metadata:
   version: 8.41.0
   resolution: "@eslint/js@npm:8.41.0"
   checksum: af013d70fe8d0429cdf5cd8b5dcc6fc384ed026c1eccb0cfe30f5849b968ab91645111373fd1b83282b38955b1bdfbe667c1a7dbda3b06cae753521223cad775
+  languageName: node
+  linkType: hard
+
+"@etisoftware/rjsf-core@npm:5.13.0":
+  version: 5.13.0
+  resolution: "@etisoftware/rjsf-core@npm:5.13.0::__archiveUrl=https%3A%2F%2Fdocker.etisoftware.com%3A443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-local%2F%40etisoftware%2Frjsf-core%2F-%2F%40etisoftware%2Frjsf-core-5.13.0.tgz"
+  dependencies:
+    "@codemirror/legacy-modes": ^0.20.0
+    lodash: ^4.17.21
+    lodash-es: ^4.17.21
+    markdown-to-jsx: ^7.3.2
+    nanoid: ^3.3.6
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@codemirror/autocomplete": ^0.20.3
+    "@codemirror/basic-setup": ^0.20.0
+    "@etisoftware/rjsf-utils": ^5.12.x
+    react: ^16.14.0 || >=17
+  checksum: 06a3189b8963f08edc175e79904caa469e91d021db92b171894224cc4a30845b82213601cddbf2e719d295dec59a23cd4bd8104b2c4e539262bb5e5691bd4f99
+  languageName: node
+  linkType: hard
+
+"@etisoftware/rjsf-utils@npm:5.13.0":
+  version: 5.13.0
+  resolution: "@etisoftware/rjsf-utils@npm:5.13.0::__archiveUrl=https%3A%2F%2Fdocker.etisoftware.com%3A443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-local%2F%40etisoftware%2Frjsf-utils%2F-%2F%40etisoftware%2Frjsf-utils-5.13.0.tgz"
+  dependencies:
+    json-schema-merge-allof: ^0.8.1
+    jsonpointer: ^5.0.1
+    lodash: ^4.17.21
+    lodash-es: ^4.17.21
+    react-is: ^18.2.0
+  peerDependencies:
+    react: ^16.14.0 || >=17
+  checksum: a7184c91274a2cd60c4d5129664bfd3fd91745ab4f2be30ad05c29497320a3987965a3615aa5934102ea225f8abffb8a782d51935cf60490e584c1f5e58732a1
   languageName: node
   linkType: hard
 
@@ -11702,6 +11745,8 @@ __metadata:
     "@dnd-kit/modifiers": ^5.0.0
     "@dnd-kit/sortable": ^6.0.0
     "@dnd-kit/utilities": ^3.1.0
+    "@etisoftware/rjsf-core": 5.13.0
+    "@etisoftware/rjsf-utils": 5.13.0
     "@fortawesome/fontawesome-svg-core": ^6.4.0
     "@fortawesome/free-regular-svg-icons": ^6.4.0
     "@fortawesome/free-solid-svg-icons": ^6.4.0
@@ -11966,6 +12011,15 @@ __metadata:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: 0c8c715229044401ea48c2fc26c2554464100074959dafacdd9e4a0e849f0a190b02f39edb373bbdd95e38b8f910074b83b63d08752b8ae6be6ddcfb40ea50a0
+  languageName: node
+  linkType: hard
+
+"markdown-to-jsx@npm:^7.3.2":
+  version: 7.3.2
+  resolution: "markdown-to-jsx@npm:7.3.2"
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: 8885c6343b71570b0a7ec16cd85a49b853a830234790ee7430e2517ea5d8d361ff138bd52147f650790f3e7b3a28a15c755fc16f8856dd01ddf09a6161782e06
   languageName: node
   linkType: hard
 

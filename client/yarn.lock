@@ -2271,7 +2271,7 @@ __metadata:
     "@codemirror/basic-setup": ^0.20.0
     "@etisoftware/rjsf-utils": ^5.12.x
     react: ^16.14.0 || >=17
-  checksum: 06a3189b8963f08edc175e79904caa469e91d021db92b171894224cc4a30845b82213601cddbf2e719d295dec59a23cd4bd8104b2c4e539262bb5e5691bd4f99
+  checksum: 2163bfbf495962e0c5374a745e83b3e976c66506e5f63fd3691f1968218c1a92f5ad57940a81115a9ddff9b319e63279ebff40c688a23dff508d6459e2622318
   languageName: node
   linkType: hard
 

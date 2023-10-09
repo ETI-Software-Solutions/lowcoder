@@ -20,6 +20,7 @@
     "@dnd-kit/modifiers": "^5.0.0",
     "@dnd-kit/sortable": "^6.0.0",
     "@dnd-kit/utilities": "^3.1.0",
+    "@etisoftware/jinja2-beautify": "^0.1.0",
     "@etisoftware/rjsf-core": "5.13.0",
     "@etisoftware/rjsf-utils": "5.13.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",

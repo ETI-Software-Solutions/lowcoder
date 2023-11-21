@@ -1,6 +1,6 @@
 //window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 import { ReactComponent as LogoIcon } from "./etisoftware.svg";
-import { ReactComponent as LogoWithNameIcon } from "./logo-with-name.svg";
+import { ReactComponent as LogoWithNameIcon } from "./etisoftware.svg";
 import { ReactComponent as LogoHomeIcon } from "./etisoftware.svg";
 
 export { default as favicon } from "./etisoftware-favicon.svg";

@@ -1459,6 +1459,8 @@ export const en = {
     shareScreen: "Share Screen",
     appid: "Application Id",
     meetingName: "Meeting Name",
+    videoCompText: "No video Text",
+    profileImageUrl: "Profile Image Url",
     right: "Right",
     bottom: "Bottom",
     videoId: "Video Id",
@@ -1487,7 +1489,7 @@ export const en = {
   },
   settings: {
     title: "Settings",
-    member: "Members",
+    userGroups: "User Groups",
     organization: "Workspaces",
     audit: "Audit Logs",
     theme: "Themes",
@@ -1495,7 +1497,9 @@ export const en = {
     advanced: "Advanced",
     lab: "Lab",
     branding: "Branding",
-    idSource: "ID Providers",
+    oauthProviders: "OAuth Providers",
+    appUsage: "App Usage Logs",
+    environments: "Environments",
     premium: "Premium",
   },
   memberSettings: {
@@ -2544,7 +2548,7 @@ export const en = {
     table,
   },
   idSource: {
-    title: "ID Providers",
+    title: "OAuth Providers",
     form: "Email",
     pay: "Premium",
     enable: "Enable",

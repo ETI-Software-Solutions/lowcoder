@@ -2403,20 +2403,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@etisoftware/jinja2-beautify@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@etisoftware/jinja2-beautify@npm:0.1.0::__archiveUrl=https%3A%2F%2Fdocker.etisoftware.com%3A443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-local%2F%40etisoftware%2Fjinja2-beautify%2F-%2F%40etisoftware%2Fjinja2-beautify-0.1.0.tgz"
+"@etisoftware/jinja2-beautify@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@etisoftware/jinja2-beautify@npm:0.1.1::__archiveUrl=https%3A%2F%2Fdocker.etisoftware.com%3A443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-local%2F%40etisoftware%2Fjinja2-beautify%2F-%2F%40etisoftware%2Fjinja2-beautify-0.1.1.tgz"
   dependencies:
     js-beautify: ^1.14.0
-  checksum: eb838fb0a779e1e120b9b22835ea5688928ef9b00a9de826010886a8122a737e1e906d20855248ab37c140cd3a298d259709655d886ed7c806f423883347e0ca
+  checksum: b6ff83fc7ef0164fab788425cc7d2f8d70c6767af0ee290a451e661b3c612178d13ac4187719f8c6f888358cd895354942d455502b8c58ab82290998ab471faf
   languageName: node
   linkType: hard
 
-"@etisoftware/rjsf-core@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@etisoftware/rjsf-core@npm:5.13.0::__archiveUrl=https%3A%2F%2Fdocker.etisoftware.com%3A443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-local%2F%40etisoftware%2Frjsf-core%2F-%2F%40etisoftware%2Frjsf-core-5.13.0.tgz"
+"@etisoftware/rjsf-core@npm:5.13.0-alpha.0":
+  version: 5.13.0-alpha.0
+  resolution: "@etisoftware/rjsf-core@npm:5.13.0-alpha.0::__archiveUrl=https%3A%2F%2Fdocker.etisoftware.com%3A443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-local%2F%40etisoftware%2Frjsf-core%2F-%2F%40etisoftware%2Frjsf-core-5.13.0-alpha.0.tgz"
   dependencies:
     "@codemirror/legacy-modes": ^0.20.0
+    "@etisoftware/jinja2-beautify": ^0.1.1
     lodash: ^4.17.21
     lodash-es: ^4.17.21
     markdown-to-jsx: ^7.3.2
@@ -2427,7 +2428,7 @@ __metadata:
     "@codemirror/basic-setup": ^0.20.0
     "@etisoftware/rjsf-utils": ^5.12.x
     react: ^16.14.0 || >=17
-  checksum: 09fa2c8ec53a6c9d48eac5526f8cf01e01c7f4b8cb3003b001ef6a3ce6655faecdaafc83160b113f1de328fcf7c5168821511c1d411f6944e812311963b69bab
+  checksum: d73742ea31ff1920e4e768260062d3748631bcbb6aca691c25e78cf09557f12c91efd0736cb8769ba451d83f32d494dc8fe44a52cd59579cbd2331311b127a9b
   languageName: node
   linkType: hard
 
@@ -12095,8 +12096,8 @@ __metadata:
     "@dnd-kit/modifiers": ^5.0.0
     "@dnd-kit/sortable": ^6.0.0
     "@dnd-kit/utilities": ^3.1.0
-    "@etisoftware/jinja2-beautify": ^0.1.0
-    "@etisoftware/rjsf-core": 5.13.0
+    "@etisoftware/jinja2-beautify": ^0.1.1
+    "@etisoftware/rjsf-core": 5.13.0-alpha.0
     "@etisoftware/rjsf-utils": 5.13.0
     "@fortawesome/fontawesome-svg-core": ^6.4.0
     "@fortawesome/free-regular-svg-icons": ^6.4.0

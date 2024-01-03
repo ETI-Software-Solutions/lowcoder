@@ -390,6 +390,7 @@ function ColumnPropertyView<T extends MultiBaseComp<TableChildrenType>>(props: {
           comp.children.columns.dispatch(action);
         }}
         dataIndex={(column) => column.getView().dataIndex}
+        scrollable={true}
       />
     </>
   );
@@ -504,11 +505,12 @@ export function compTablePropertyView<T extends MultiBaseComp<TableChildrenType>
 
       {["layout", "both"].includes(editorModeStatus) && (
         <><Section name={"Table Style"}>
-            {comp.children.style.getPropertyView()}
-            
+            {comp.children.style.getPropertyView()}  
           </Section>
           <Section name={"Row Style"}>
             {comp.children.rowStyle.getPropertyView()}
+            {comp.children.rowAutoHeight.getPropertyView()}
+            {comp.children.rowHeight.getPropertyView()}
             {comp.children.rowColor.getPropertyView()}
           </Section>
           <Section name={"Column Style"}>

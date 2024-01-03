@@ -2,7 +2,7 @@ import { Table } from "antd";
 import { TableProps } from "antd/es/table";
 import { TableCellContext, TableRowContext } from "comps/comps/tableComp/tableContext";
 import { TableToolbar } from "comps/comps/tableComp/tableToolbarComp";
-import { RowColorViewType } from "comps/comps/tableComp/tableTypes";
+import { RowColorViewType, RowHeightViewType } from "comps/comps/tableComp/tableTypes";
 import {
   COL_MIN_WIDTH,
   COLUMN_CHILDREN_KEY,
@@ -17,6 +17,7 @@ import {
   defaultTheme,
   handleToHoverRow,
   handleToSelectedRow,
+  TableColumnLinkStyleType,
   TableColumnStyleType,
   TableRowStyleType,
   TableStyleType,
@@ -169,6 +170,10 @@ const TableWrapper = styled.div<{
       border-top: none !important;
       border-inline-start: none !important;
 
+      &::after {
+        box-shadow: none !important;
+      }
+
       .ant-table-content {
         overflow: unset !important;
       }
@@ -280,8 +285,11 @@ const TableTh = styled.th<{ width?: number }>`
 
 const TableTd = styled.td<{
   background: string;
-  $style: TableColumnStyleType;
+  $style: TableColumnStyleType & {rowHeight?: string};
+  $linkStyle?: TableColumnLinkStyleType;
   $isEditing: boolean;
+  $tableSize?: string;
+  $autoHeight?: boolean;
 }>`
   .ant-table-row-expand-icon,
   .ant-table-row-indent {
@@ -291,19 +299,45 @@ const TableTd = styled.td<{
     background: ${(props) => props.background};
     border-color: ${(props) => props.$style.border};
   }
-
   background: ${(props) => props.background} !important;
   border-color: ${(props) => props.$style.border} !important;
   border-width: ${(props) => props.$style.borderWidth} !important;
   border-radius: ${(props) => props.$style.radius};
   padding: 0 !important;
 
-  > div > div {
+  > div {
     color: ${(props) => props.$style.text};
     font-size: ${(props) => props.$style.textSize};
-    &,
-    > .ant-badge > .ant-badge-status-text,
-    > div > .markdown-body {
+    line-height: 21px;
+
+    ${(props) => props.$tableSize === 'small' && `
+      padding: 8.5px 8px;
+      min-height: ${props.$style.rowHeight || '39px'};
+      ${!props.$autoHeight && `
+        overflow-y: auto;
+        max-height: ${props.$style.rowHeight || '39px'};
+      `};
+    `};
+    ${(props) => props.$tableSize === 'middle' && `
+      padding: 12.5px 8px;
+      min-height: ${props.$style.rowHeight || '47px'};
+      ${!props.$autoHeight && `
+        overflow-y: auto;
+        max-height: ${props.$style.rowHeight || '47px'};
+      `};
+    `};
+    ${(props) => props.$tableSize === 'large' && `
+      padding: 16.5px 16px;
+      min-height: ${props.$style.rowHeight || '55px'};
+      ${!props.$autoHeight && `
+        overflow-y: auto;
+        max-height: ${props.$style.rowHeight || '55px'};
+      `};
+    `};
+
+    
+    > div > .ant-badge > .ant-badge-status-text,
+    > div > div > .markdown-body {
       color: ${(props) => props.$style.text};
     }
 
@@ -313,11 +347,15 @@ const TableTd = styled.td<{
 
     // dark link|links color
     > a,
-    > div > a {
-      color: ${(props) => isDarkColor(props.background) && "#A6FFFF"};
+    > div  a {
+      color: ${(props) => props.$linkStyle?.text};
 
       &:hover {
-        color: ${(props) => isDarkColor(props.background) && "#2EE6E6"};
+        color: ${(props) => props.$linkStyle?.hoverText};
+      }
+
+      &:active {
+        color: ${(props) => props.$linkStyle?.activeText}};
       }
     }
   }
@@ -383,30 +421,42 @@ type CustomTableProps<RecordType> = Omit<TableProps<RecordType>, "components" | 
   columns: CustomColumnType<RecordType>[];
   viewModeResizable: boolean;
   rowColorFn: RowColorViewType;
+  rowHeightFn: RowHeightViewType;
   columnsStyle: TableColumnStyleType;
+  size?: string;
+  rowAutoHeight?: boolean;
 };
 
 function TableCellView(props: {
   record: RecordType;
   title: string;
   rowColorFn: RowColorViewType;
+  rowHeightFn: RowHeightViewType;
   cellColorFn: CellColorViewType;
   rowIndex: number;
   children: any;
   columnsStyle: TableColumnStyleType;
   columnStyle: TableColumnStyleType;
+  linkStyle: TableColumnLinkStyleType;
+  tableSize?: string;
+  autoHeight?: boolean;
 }) {
   const {
     record,
     title,
     rowIndex,
     rowColorFn,
+    rowHeightFn,
     cellColorFn,
     children,
     columnsStyle,
     columnStyle,
+    linkStyle,
+    tableSize,
+    autoHeight,
     ...restProps
   } = props;
+
   const [editing, setEditing] = useState(false);
   const rowContext = useContext(TableRowContext);
   let tdView;
@@ -419,17 +469,24 @@ function TableCellView(props: {
       currentOriginalIndex: record[OB_ROW_ORI_INDEX],
       columnTitle: title,
     });
+    const rowHeight = rowHeightFn({
+      currentRow: record,
+      currentIndex: rowIndex,
+      currentOriginalIndex: record[OB_ROW_ORI_INDEX],
+      columnTitle: title,
+    });
     const cellColor = cellColorFn({
       currentCell: record[title.toLowerCase()],
     });
   
-    const style: TableColumnStyleType = {
+    const style = {
       background: cellColor || rowColor || columnStyle.background || columnsStyle.background,
       text: columnStyle.text || columnsStyle.text,
       border: columnStyle.border || columnsStyle.border,
       radius: columnStyle.radius || columnsStyle.radius,
       borderWidth: columnStyle.borderWidth || columnsStyle.borderWidth,
       textSize: columnStyle.textSize || columnsStyle.textSize,
+      rowHeight: rowHeight,
     }
     let { background } = style;
     if (rowContext.selected) {
@@ -443,7 +500,10 @@ function TableCellView(props: {
         {...restProps}
         background={background}
         $style={style}
+        $linkStyle={linkStyle}
         $isEditing={editing}
+        $tableSize={tableSize}
+        $autoHeight={autoHeight}
       >
         {children}
       </TableTd>
@@ -484,7 +544,7 @@ function ResizeableTable<RecordType extends object>(props: CustomTableProps<Reco
   });
   let allColumnFixed = true;
   const columns = props.columns.map((col, index) => {
-    const { width, style, cellColorFn, ...restCol } = col;
+    const { width, style, linkStyle, cellColorFn, ...restCol } = col;
     const resizeWidth = (resizeData.index === index ? resizeData.width : col.width) ?? 0;
     let colWidth: number | string = "auto";
     let minWidth: number | string = COL_MIN_WIDTH;
@@ -511,10 +571,14 @@ function ResizeableTable<RecordType extends object>(props: CustomTableProps<Reco
         record,
         title: col.titleText,
         rowColorFn: props.rowColorFn,
+        rowHeightFn: props.rowHeightFn,
         cellColorFn: cellColorFn,
         rowIndex: rowIndex,
         columnsStyle: props.columnsStyle,
         columnStyle: style,
+        linkStyle,
+        tableSize: props.size,
+        autoHeight: props.rowAutoHeight,
       }),
       onHeaderCell: () => ({
         width: resizeWidth,
@@ -583,6 +647,7 @@ export function TableCompView(props: {
   const compChildren = comp.children;
   const style = compChildren.style.getView();
   const rowStyle = compChildren.rowStyle.getView();
+  const rowAutoHeight = compChildren.rowAutoHeight.getView();
   const columnsStyle = compChildren.columnsStyle.getView();
   const changeSet = useMemo(() => compChildren.columns.getChangeSet(), [compChildren.columns]);
   const hasChange = useMemo(() => !_.isEmpty(changeSet), [changeSet]);
@@ -610,7 +675,7 @@ export function TableCompView(props: {
         size,
         dynamicColumn,
         dynamicColumnConfig,
-        columnsAggrData
+        columnsAggrData,
       ),
     [
       columnViews,
@@ -711,6 +776,7 @@ export function TableCompView(props: {
             }
           }}
           rowColorFn={compChildren.rowColor.getView() as any}
+          rowHeightFn={compChildren.rowHeight.getView() as any}
           {...compChildren.selection.getView()(onEvent)}
           bordered={!compChildren.hideBordered.getView()}
           onChange={(pagination, filters, sorter, extra) => {
@@ -722,6 +788,7 @@ export function TableCompView(props: {
           viewModeResizable={compChildren.viewModeResizable.getView()}
           dataSource={pageDataInfo.data}
           size={compChildren.size.getView()}
+          rowAutoHeight={rowAutoHeight}
           tableLayout="fixed"
           loading={
             loading ||

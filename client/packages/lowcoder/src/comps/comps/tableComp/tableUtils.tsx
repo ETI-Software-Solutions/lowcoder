@@ -17,7 +17,7 @@ import { tryToNumber } from "util/convertUtils";
 import { JSONObject, JSONValue } from "util/jsonTypes";
 import { StatusType } from "./column/columnTypeComps/columnStatusComp";
 import { ColumnListComp, tableDataRowExample } from "./column/tableColumnListComp";
-import { TableColumnStyleType } from "comps/controls/styleControlConstants";
+import { TableColumnLinkStyleType, TableColumnStyleType } from "comps/controls/styleControlConstants";
 
 export const COLUMN_CHILDREN_KEY = "children";
 export const OB_ROW_ORI_INDEX = "__ob_origin_index";
@@ -254,6 +254,7 @@ export type CustomColumnType<RecordType> = ColumnType<RecordType> & {
   onWidthResize?: (width: number) => void;
   titleText: string;
   style: TableColumnStyleType;
+  linkStyle: TableColumnLinkStyleType;
   cellColorFn: CellColorViewType;
 };
 
@@ -267,7 +268,7 @@ export function columnsToAntdFormat(
   size: string,
   dynamicColumn: boolean,
   dynamicColumnConfig: Array<string>,
-  columnsAggrData: ColumnsAggrData
+  columnsAggrData: ColumnsAggrData,
 ): Array<CustomColumnType<RecordType>> {
   const sortMap: Map<string | undefined, SortOrder> = new Map(
     sort.map((s) => [s.column, s.desc ? "descend" : "ascend"])
@@ -324,6 +325,11 @@ export function columnsToAntdFormat(
         textSize: column.textSize,
         borderWidth: column.borderWidth,
       },
+      linkStyle: {
+        text: column.linkColor,
+        hoverText: column.linkHoverColor,
+        activeText: column.linkActiveColor,
+      },
       cellColorFn: column.cellColor,
       onWidthResize: column.onWidthResize,
       render: (value: any, record: RecordType, index: number) => {
@@ -338,7 +344,12 @@ export function columnsToAntdFormat(
             String(record[OB_ROW_ORI_INDEX])
           )
           .getView()
-          .view({ editable: column.editable, size, candidateTags: tags, candidateStatus: status });
+          .view({
+            editable: column.editable,
+            size, candidateTags: tags,
+            candidateStatus: status,
+            textOverflow: column.textOverflow,
+          });
       },
       ...(column.sortable
         ? {

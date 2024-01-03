@@ -5,6 +5,7 @@ import {
   ArrayStringControl,
   BoolCodeControl,
   ColorOrBoolCodeControl,
+  HeightOrBoolCodeControl,
   JSONObjectArrayControl,
   RadiusControl,
   StringControl,
@@ -108,7 +109,9 @@ const TableEventControl = eventHandlerControl(TableEventOptions);
 
 const rowColorLabel = trans("table.rowColor");
 const RowColorTempComp = withContext(
-  new MultiCompBuilder({ color: ColorOrBoolCodeControl }, (props) => props.color)
+  new MultiCompBuilder({
+    color: ColorOrBoolCodeControl,
+  }, (props) => props.color)
     .setPropertyViewFn((children) =>
       children.color.propertyView({
         label: rowColorLabel,
@@ -134,6 +137,36 @@ export type RowColorViewType = (param: {
   columnTitle: string;
 }) => string;
 
+const rowHeightLabel = trans("table.rowHeight");
+const RowHeightTempComp = withContext(
+  new MultiCompBuilder({
+    height: HeightOrBoolCodeControl,
+  }, (props) => props.height)
+    .setPropertyViewFn((children) =>
+      children.height.propertyView({
+        label: rowHeightLabel,
+        tooltip: trans("table.rowHeightDesc"),
+      })
+    )
+    .build(),
+  ["currentRow", "currentIndex", "currentOriginalIndex", "columnTitle"] as const
+);
+
+// @ts-ignore
+export class RowHeightComp extends RowHeightTempComp {
+  override getPropertyView() {
+    return controlItem({ filterText: rowHeightLabel }, super.getPropertyView());
+  }
+}
+
+// fixme, should be infer from RowHeightComp, but withContext type incorrect
+export type RowHeightViewType = (param: {
+  currentRow: any;
+  currentIndex: number;
+  currentOriginalIndex: number | string;
+  columnTitle: string;
+}) => string;
+
 const tableChildrenMap = {
   hideBordered: BoolControl,
   hideHeader: BoolControl,
@@ -150,13 +183,15 @@ const tableChildrenMap = {
   style: styleControl(TableStyle),
   rowStyle: styleControl(TableRowStyle),
   searchText: StringControl,
-  columnsStyle: withDefault(styleControl(TableColumnStyle), {radius: '0px'}),
+  columnsStyle: withDefault(styleControl(TableColumnStyle), {borderWidth: '1px', radius: '0px'}),
   viewModeResizable: BoolControl,
   // sample data for regenerating columns
   dataRowExample: stateComp<JSONObject | null>(null),
   onEvent: TableEventControl,
   loading: BoolCodeControl,
   rowColor: RowColorComp,
+  rowAutoHeight: withDefault(AutoHeightControl, "auto"),
+  rowHeight: RowHeightComp,
   dynamicColumn: BoolPureControl,
   // todo: support object config
   dynamicColumnConfig: ArrayStringControl,

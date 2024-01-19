@@ -40,7 +40,7 @@ import {
 import { TriContainer } from "../triContainerComp/triContainer";
 import { traverseCompTree } from "../containerBase/utils";
 import { IForm } from "./formDataConstants";
-import { Spin } from "antd";
+import { default as Spin } from "antd/es/spin";
 import { BoolControl } from "comps/controls/boolControl";
 import { BottomResTypeEnum } from "types/bottomRes";
 import { BoolCodeControl, JSONObjectControl } from "comps/controls/codeControl";
@@ -218,6 +218,21 @@ const FormBaseComp = (function () {
               <Section name={sectionNames.style}>
                 {children.container.stylePropertyView()}
               </Section>
+              {children.container.children.showHeader.getView() && (
+                <Section name={"Header Style"}>
+                  { children.container.headerStylePropertyView() }
+                </Section>
+              )}
+              {children.container.children.showBody.getView() && (
+                <Section name={"Body Style"}>
+                  { children.container.bodyStylePropertyView() }
+                </Section>
+              )}
+              {children.container.children.showFooter.getView() && (
+                <Section name={"Footer Style"}>
+                  { children.container.footerStylePropertyView() }
+                </Section>
+              )}
             </>
           )}
           

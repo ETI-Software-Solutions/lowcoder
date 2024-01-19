@@ -35,7 +35,11 @@ Configure the Redis connection URI in the application-lowcoder.yml
 
 ```shell
 mvn clean package
+<<<<<<< HEAD
 java -Dpf4j.mode=development -Dspring.profiles.active=lowcoder -Dpf4j.pluginsDir=lowcoder-plugins -jar lowcoder-server/target/openblocks-server-2.0.1-SNAPSHOT.jar
+=======
+java -Dpf4j.mode=development -Dspring.profiles.active=lowcoder -Dpf4j.pluginsDir=lowcoder-plugins -jar lowcoder-server/target/lowcoder-server-1.0-SNAPSHOT.jar
+>>>>>>> 82e21ec5b1bee888d7658c8f78c6577721694c9c
 ```
 
 <img src="../../docs/.gitbook/assets/server-setup-start.gif"/>
@@ -57,15 +61,15 @@ IDEA 2021.3.2 (Community Edition):
     </tr>
     <tr>
         <td>-cp </td>
-        <td>openblocks-server </td>
+        <td>lowcoder-server </td>
     </tr>
     <tr>
         <td>VM options </td>
-        <td>-Dpf4j.mode=development -Dpf4j.pluginsDir=openblocks-plugins -Dspring.profiles.active=openblocks -XX:+AllowRedefinitionToAddDeleteMethods --add-opens java.base/java.nio=ALL-UNNAMED</td>
+        <td>-Dpf4j.mode=development -Dpf4j.pluginsDir=lowcoder-plugins -Dspring.profiles.active=lowcoder -XX:+AllowRedefinitionToAddDeleteMethods --add-opens java.base/java.nio=ALL-UNNAMED</td>
     </tr>
     <tr>
         <td>Main class </td>
-        <td>com.openblocks.api.ServerApplication </td>
+        <td>com.lowcoder.api.ServerApplication </td>
     </tr>
 </table>
 

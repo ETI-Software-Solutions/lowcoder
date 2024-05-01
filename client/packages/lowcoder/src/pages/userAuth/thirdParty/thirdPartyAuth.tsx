@@ -3,6 +3,7 @@ import {
   ThirdPartyAuthGoal,
   ThirdPartyConfigType,
 } from "constants/authConstants";
+import { useLocation } from "react-router-dom";
 import { WhiteLoading } from "lowcoder-design";
 import history from "util/history";
 import { LoginLogoStyle, LoginLabelStyle, StyledLoginButton } from "pages/userAuth/authComponents";
@@ -27,6 +28,7 @@ const ThirdPartyLoginButtonWrapper = styled.div`
 `;
 
 function ThirdPartyLoginButton(props: {
+  loginRedirectUrl: string;
   config: ThirdPartyConfigType;
   invitationId?: string;
   invitedOrganizationId?: string;
@@ -34,14 +36,13 @@ function ThirdPartyLoginButton(props: {
   authGoal: ThirdPartyAuthGoal;
   label: string;
 }) {
-  const { config, label } = props;
-  const loginRedirectUrl = useRedirectUrl();
+  const { config, label, loginRedirectUrl } = props;
   const redirectUrl = getRedirectUrl(config.authType);
   const onLoginClick = () => {
     const state = geneAuthStateAndSaveParam(
       props.authGoal,
       config,
-      loginRedirectUrl,
+      loginRedirectUrl || redirectUrl,
       props.invitationId,
       props.invitedOrganizationId,
     );
@@ -102,6 +103,10 @@ export function ThirdPartyAuth(props: {
   authGoal: ThirdPartyAuthGoal;
   labelFormatter?: (name: string) => string;
 }) {
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const loginRedirectUrl = queryParams.get("loginRedirectUrl")
   const systemConfig = useSelector(selectSystemConfig);
   if (!systemConfig) {
     return null;
@@ -118,6 +123,7 @@ export function ThirdPartyAuth(props: {
         autoJump={config.sourceType === props.autoJumpSource}
         key={config.name}
         config={config}
+        loginRedirectUrl={loginRedirectUrl || ""}
         invitationId={props.invitationId}
         invitedOrganizationId={props.invitedOrganizationId}
         label={props.labelFormatter ? props.labelFormatter(config.name) : config.name}

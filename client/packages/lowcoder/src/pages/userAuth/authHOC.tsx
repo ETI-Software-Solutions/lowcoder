@@ -3,12 +3,21 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { getUser, isFetchUserFinished } from "redux/selectors/usersSelectors";
+import {useLocation} from "react-use";
 
 export const requiresUnAuth = <Props extends {}>(Component: React.ComponentType<Props>) => {
   function Wrapped(props: Props) {
     const user = useSelector(getUser);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const loginRedirectUrl = queryParams.get('loginRedirectUrl');
     if (!user.isAnonymous) {
-      return <Redirect to={BASE_URL} />;
+      if(loginRedirectUrl) {
+        const absoluteUrl = new URL(loginRedirectUrl, window.location.origin).href;
+        window.location.replace(absoluteUrl);
+      }
+      else
+        return <Redirect to={BASE_URL} />;
     }
     return <Component {...props} />;
   }

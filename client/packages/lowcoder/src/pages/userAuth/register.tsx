@@ -32,7 +32,7 @@ const StyledPasswordInput = styled(PasswordInput)`
 const RegisterContent = styled(FormWrapperMobile)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 106px;
+  margin-bottom: 66px;
 `;
 
 function UserRegister() {
@@ -79,9 +79,13 @@ function UserRegister() {
       subHeading={registerSubHeading}
       type="large"
     >
-      <RegisterContent>
-        <LoginCardTitle>{trans("userAuth.registerByEmail")}</LoginCardTitle>
-        <StyledFormInput
+      <LoginCardTitle>{trans("userAuth.registerByEmail")}</LoginCardTitle>
+      <RegisterContent style={organizationId && {
+          marginBottom: "40px",
+          marginTop: "-50px",
+      }}>
+      {!organizationId && (
+        <><StyledFormInput
           className="form-input"
           label={trans("userAuth.email")}
           onChange={(value, valid) => setAccount(valid ? value : "")}
@@ -89,29 +93,25 @@ function UserRegister() {
           checkRule={{
             check: checkEmailValid,
             errorMsg: trans("userAuth.inputValidEmail"),
-          }}
+          }} /><StyledPasswordInput
+            className="form-input"
+            valueCheck={checkPassWithMsg}
+            onChange={(value, valid) => setPassword(valid ? value : "")}
+            doubleCheck /><ConfirmButton
+              disabled={!account || !password || submitBtnDisable}
+              onClick={onSubmit}
+              loading={loading}
+            >
+            {trans("userAuth.register")}
+          </ConfirmButton><TermsAndPrivacyInfo onCheckChange={(e) => setSubmitBtnDisable(!e.target.checked)} /></>
+      )}
+      {organizationId && (
+        <ThirdPartyAuth
+          invitationId={invitationId}
+          invitedOrganizationId={organizationId}
+          authGoal="register"
         />
-        <StyledPasswordInput
-          className="form-input"
-          valueCheck={checkPassWithMsg}
-          onChange={(value, valid) => setPassword(valid ? value : "")}
-          doubleCheck
-        />
-        <ConfirmButton
-          disabled={!account || !password || submitBtnDisable}
-          onClick={onSubmit}
-          loading={loading}
-        >
-          {trans("userAuth.register")}
-        </ConfirmButton>
-        <TermsAndPrivacyInfo onCheckChange={(e) => setSubmitBtnDisable(!e.target.checked)} />
-        {organizationId && (
-          <ThirdPartyAuth
-            invitationId={invitationId}
-            invitedOrganizationId={organizationId}
-            authGoal="register"
-          />
-        )}
+      )}
       </RegisterContent>
       <StyledRouteLinkLogin to={{
         pathname: orgId

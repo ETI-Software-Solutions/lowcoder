@@ -120,7 +120,7 @@ export const getLoginTitle = (inviteUserName?: string, brandName?: string) => {
   const productName = brandName ?? trans("productName");
   return inviteUserName
     ? trans("userAuth.inviteWelcomeTitle", { username: inviteUserName, productName })
-    : trans("userAuth.welcomeTitle", { productName });
+    : trans("userAuth.login");
 };
 
 /**

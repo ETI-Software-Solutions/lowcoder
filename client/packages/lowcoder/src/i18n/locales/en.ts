@@ -2147,7 +2147,7 @@ export const en = {
     "passwordCheckContainsNumberAndLetter": "Must Contain Letters and Numbers",
     "passwordCheckSpace": "Cannot Contain Whitespace Characters",
     "welcomeTitle": "Welcome to {productName}",
-    "inviteWelcomeTitle": "{username} Invite You to Login {productName}",
+    "inviteWelcomeTitle": "{username} invites you to sign in",
     "terms": "Terms",
     "privacy": "Privacy Policy",
     "registerHint": "I Have Read and Agree to the",

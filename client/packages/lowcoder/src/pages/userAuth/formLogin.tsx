@@ -21,7 +21,7 @@ import { useLocation, useParams } from "react-router-dom";
 const AccountLoginWrapper = styled(FormWrapperMobile)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 106px;
+  margin-bottom: 66px;
 `;
 
 type FormLoginProps = {
@@ -57,8 +57,12 @@ export default function FormLogin(props: FormLoginProps) {
   return (
     <>
       <LoginCardTitle>{trans("userAuth.login")}</LoginCardTitle>
-      <AccountLoginWrapper>
-        <FormInput
+      <AccountLoginWrapper style={(orgId || invitationId) && {
+          marginBottom: "40px",
+          marginTop: "-50px",
+      }}>
+      {!props.organizationId && (
+        <><FormInput
           className="form-input"
           label={trans("userAuth.email")}
           onChange={(value, valid) => setAccount(valid ? value : "")}
@@ -66,24 +70,21 @@ export default function FormLogin(props: FormLoginProps) {
           checkRule={{
             check: (value) => checkPhoneValid(value) || checkEmailValid(value),
             errorMsg: trans("userAuth.inputValidEmail"),
-          }}
+          }} /><PasswordInput
+            className="form-input"
+            onChange={(value) => setPassword(value)}
+            valueCheck={() => [true, ""]} /><ConfirmButton loading={loading} disabled={!account || !password} onClick={onSubmit}>
+            {trans("userAuth.login")}
+          </ConfirmButton></>
+      )}
+      
+      {props.organizationId && (
+        <ThirdPartyAuth
+          invitationId={invitationId}
+          invitedOrganizationId={props.organizationId}
+          authGoal="login"
         />
-        <PasswordInput
-          className="form-input"
-          onChange={(value) => setPassword(value)}
-          valueCheck={() => [true, ""]}
-        />
-        <ConfirmButton loading={loading} disabled={!account || !password} onClick={onSubmit}>
-          {trans("userAuth.login")}
-        </ConfirmButton>
-        
-        {props.organizationId && (
-          <ThirdPartyAuth
-            invitationId={invitationId}
-            invitedOrganizationId={props.organizationId}
-            authGoal="login"
-          />
-        )}
+      )}
       </AccountLoginWrapper>
       <AuthBottomView>
         <StyledRouteLink to={{

@@ -132,7 +132,8 @@ export function ThirdPartyAuth(props: {
   });
   return (
     <ThirdPartyLoginButtonWrapper>
-      { Boolean(socialLoginButtons.length) && <Divider /> }
+      { Boolean(socialLoginButtons.length === 1) && <Divider style={{ visibility: "hidden" }} /> }
+      { Boolean(socialLoginButtons.length > 1) && <Divider /> }
       {socialLoginButtons}
     </ThirdPartyLoginButtonWrapper>
   );

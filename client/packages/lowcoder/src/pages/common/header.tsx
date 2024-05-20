@@ -4,7 +4,7 @@ import { default as Radio, RadioChangeEvent } from "antd/es/radio";
 import LayoutHeader from "components/layout/Header";
 import { SHARE_TITLE } from "constants/apiConstants";
 import { AppTypeEnum } from "constants/applicationConstants";
-import { ALL_APPLICATIONS_URL, AUTH_LOGIN_URL, preview } from "constants/routesURL";
+import { ETISOFTWARE_LAUNCHPAD_URL, AUTH_LOGIN_URL, preview } from "constants/routesURL";
 import { User } from "constants/userConstants";
 import {
   CommonTextLabel,
@@ -312,10 +312,12 @@ export default function Header(props: HeaderProps) {
     toggleEditorModeStatus(value);
     editorState.setEditorModeStatus(value);
   };
+
+  const launchpadUrl = `${window.location.protocol}//${window.location.hostname}${ETISOFTWARE_LAUNCHPAD_URL}`
   
   const headerStart = (
     <>
-      <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>
+      <StyledLink onClick={() => window.location.assign(launchpadUrl)}>
         {/* {REACT_APP_LOWCODER_SHOW_BRAND === 'true' ? REACT_APP_LOWCODER_CUSTOM_LOGO_SQUARE !== "" ? <img src={REACT_APP_LOWCODER_CUSTOM_LOGO_SQUARE } height={24} width={24} alt="logo" /> :<LogoIcon /> :  <LogoHome />} */}
         <LogoHome />
       </StyledLink>
@@ -466,8 +468,9 @@ export default function Header(props: HeaderProps) {
 export function AppHeader() {
   const user = useSelector(getUser);
   const brandingConfig = useSelector(getBrandingConfig);
+  const launchpadUrl = `${window.location.protocol}//${window.location.hostname}${ETISOFTWARE_LAUNCHPAD_URL}`
   const headerStart = (
-    <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>
+    <StyledLink onClick={() => window.location.assign(launchpadUrl)}>
       {/* {REACT_APP_LOWCODER_SHOW_BRAND === 'true' ?  REACT_APP_LOWCODER_CUSTOM_LOGO !== "" ? <img src={REACT_APP_LOWCODER_CUSTOM_LOGO}  height={28} alt="logo" /> :<LogoWithName branding={!user.orgDev} /> : <LogoHome />} */}
       <LogoHome />
     </StyledLink>

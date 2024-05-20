@@ -19,6 +19,7 @@ export const OAUTH_PROVIDER_DETAIL = "/setting/oauth-provider/detail";
 export const PERMISSION_SETTING_DETAIL = `${PERMISSION_SETTING}/:groupId`;
 export const ORGANIZATION_SETTING_DETAIL = `${ORGANIZATION_SETTING}/:orgId`;
 
+export const ETISOFTWARE_LAUNCHPAD_URL = "/launchpad";
 export const ALL_APPLICATIONS_URL = "/apps";
 export const MODULE_APPLICATIONS_URL = "/apps/module";
 export const DATASOURCE_URL = `/datasource`;

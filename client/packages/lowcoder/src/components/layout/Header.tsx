@@ -19,6 +19,7 @@ const HeaderWrapper = styled.header<IHeaderProps>`
 
 const HeaderStart = styled.div`
   display: flex;
+  margin-left: 5px;
   align-items: center;
 `;
 const HeaderMiddle = styled.div`
@@ -31,6 +32,7 @@ const HeaderMiddle = styled.div`
 `;
 const HeaderEnd = styled.div`
   display: flex;
+  margin-right: 5px;
   align-items: center;
 `;
 

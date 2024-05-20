@@ -48,7 +48,7 @@ export const markUserStatus = (type: UserStatusType, value: boolean) => {
   };
 };
 
-type LogoutActionPayload = { notAuthorised?: boolean };
+type LogoutActionPayload = { notAuthorised?: boolean, orgId?: string };
 export type LogoutActionType = ReduxAction<LogoutActionPayload>;
 export const logoutAction = (payload: LogoutActionPayload) => ({
   type: ReduxActionTypes.LOGOUT_USER_INIT,

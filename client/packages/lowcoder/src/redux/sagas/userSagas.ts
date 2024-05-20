@@ -6,7 +6,7 @@ import {
   ReduxActionErrorTypes,
   ReduxActionTypes,
 } from "constants/reduxActionConstants";
-import { AUTH_LOGIN_URL } from "constants/routesURL";
+import { AUTH_LOGIN_URL, ORG_AUTH_LOGIN_URL} from "constants/routesURL";
 import log from "loglevel";
 import { all, call, delay, put, takeLatest } from "redux-saga/effects";
 import {
@@ -136,7 +136,7 @@ export function* updateUserSaga(action: ReduxAction<UpdateUserPayload>) {
 export function* logoutSaga(action: LogoutActionType) {
   try {
     let redirectURL = AUTH_LOGIN_URL;
-    if (action.payload.notAuthorised) {
+    if (action.payload.notAuthorised && !action.payload.orgId) {
       const currentUrl = window.location.href
       const urlObj = new URL(currentUrl);
       // Add loginType param for auto login jump
@@ -152,6 +152,10 @@ export function* logoutSaga(action: LogoutActionType) {
       isValidResponse = validateResponse(response);
     }
     if (isValidResponse) {
+      const orgId = action.payload?.orgId ? action.payload?.orgId : ""
+      if (orgId) {
+        redirectURL = ORG_AUTH_LOGIN_URL.replace(':orgId', orgId);
+      }
       yield put(logoutSuccess());
       localStorage.clear();
       window.location.replace(redirectURL);

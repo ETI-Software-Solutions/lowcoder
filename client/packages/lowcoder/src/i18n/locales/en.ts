@@ -1,7 +1,7 @@
 import table from "./componentDocExtra/table.md?url";
 
 export const en = {
-  "productName": "Lowcoder",
+  "productName": "ETI Software",
   "productDesc": "Create software applications for your company and customers with minimal coding experience. Lowcoder is an excellent alternative to Retool, Appsmith, and Tooljet.",
   "notSupportedBrowser": "Your current browser may have compatibility issues. For an optimal user experience, please use the latest version of Chrome.",
   "create": "Create",

@@ -1,7 +1,7 @@
 import { default as Skeleton } from "antd/es/skeleton";
 import Header from "components/layout/Header";
 import { SHARE_TITLE } from "constants/apiConstants";
-import { ALL_APPLICATIONS_URL, APPLICATION_VIEW_URL, AUTH_LOGIN_URL } from "constants/routesURL";
+import { ETISOFTWARE_LAUNCHPAD_URL, APPLICATION_VIEW_URL, AUTH_LOGIN_URL } from "constants/routesURL";
 import { User } from "constants/userConstants";
 import { EllipsisTextCss, isDarkColor, TacoButton, TextEditIcon } from "lowcoder-design";
 import { useSelector } from "react-redux";
@@ -131,10 +131,11 @@ export const PreviewHeader = () => {
   const templateId = useSelector(getTemplateId);
   const brandingConfig = useSelector(getBrandingConfig);
   const [permissionDialogVisible, setPermissionDialogVisible] = useState(false);
+  const launchpadUrl = `${window.location.protocol}//${window.location.hostname}${ETISOFTWARE_LAUNCHPAD_URL}`
 
   const headerStart = (
     <>
-      <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>
+      <StyledLink onClick={() => window.location.assign(launchpadUrl)}>
         <LogoIcon branding={true} />
       </StyledLink>
       <HeaderFont $bgColor={brandingConfig?.headerColor ?? "#2c2c2c"}>

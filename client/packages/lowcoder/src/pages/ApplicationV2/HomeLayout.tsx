@@ -273,7 +273,7 @@ export function HomeLayout(props: HomeLayoutProps) {
     .filter((e) =>
       searchValue
         ? e.name.toLocaleLowerCase().includes(searchValue) ||
-          e.createBy.toLocaleLowerCase().includes(searchValue)
+        (e.createBy && e.createBy.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()))
         : true
     )
     .filter((e) => {

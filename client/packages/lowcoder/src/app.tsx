@@ -132,6 +132,15 @@ class AppIndex extends React.Component<AppIndexProps, any> {
       const hideLoadingHeader = isTemplate || isAuthUnRequired(pathname);
       return <ProductLoading hideHeader={hideLoadingHeader} />;
     }
+    else {
+      // if the user just logged in, we send the event to posthog
+      if (isLocalhost || isLowCoderDomain) {
+        if (sessionStorage.getItem('_just_logged_in_')) {
+          posthog.identify(this.props.currentUserId);
+          sessionStorage.removeItem('_just_logged_in_');
+        }
+      }
+    }
 
     // persisting the language in local storage
     localStorage.setItem('lowcoder_uiLanguage', this.props.uiLanguage);

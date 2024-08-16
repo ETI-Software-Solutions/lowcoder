@@ -240,6 +240,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.wiremock</groupId>
+			<artifactId>wiremock-jetty12</artifactId>
+			<version>3.6.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -270,6 +276,26 @@
 						<configuration>
 							<outputDirectory>${assembly.lib.directory}</outputDirectory>
 							<includeScope>runtime</includeScope>
+							<excludeArtifactIds>rjson</excludeArtifactIds>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-rjson-snapshot</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>tv.twelvetone.rjson</groupId>
+									<artifactId>rjson</artifactId>
+									<version>LATEST</version>
+									<overWrite>true</overWrite>
+									<outputDirectory>${assembly.lib.directory}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<useBaseVersion>false</useBaseVersion>
 						</configuration>
 					</execution>
 				</executions>

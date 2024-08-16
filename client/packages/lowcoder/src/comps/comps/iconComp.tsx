@@ -80,20 +80,24 @@ const IconView = (props: RecordConstructorToView<typeof childrenMap>) => {
   };
 
   return (
-    <ReactResizeDetector onResize={onResize}>
-      <Container
-        ref={conRef}
-        $style={props.style}
-        style={{
-          fontSize: props.autoHeight
-            ? `${height < width ? height : width}px`
-            : props.iconSize,
-          background: props.style.background,
-        }}
-        onClick={() => props.onEvent("click")}
-      >
-        {props.icon}  
-      </Container>
+    <ReactResizeDetector
+      onResize={onResize}
+      render={() => (
+        <Container
+          ref={conRef}
+          $style={props.style}
+          style={{
+            fontSize: props.autoHeight
+              ? `${height < width ? height : width}px`
+              : props.iconSize,
+            background: props.style.background,
+          }}
+          onClick={() => props.onEvent("click")}
+        >
+          {props.icon}  
+        </Container>
+      )}
+    >
     </ReactResizeDetector>
   );
 };
@@ -144,3 +148,4 @@ IconBasicComp = class extends IconBasicComp {
 export const IconComp = withExposingConfigs(IconBasicComp, [
   NameConfigHidden,
 ]);
+

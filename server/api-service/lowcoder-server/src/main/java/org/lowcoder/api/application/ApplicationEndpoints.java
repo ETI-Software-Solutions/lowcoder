@@ -1,11 +1,8 @@
 package org.lowcoder.api.application;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.BooleanUtils;
 import org.lowcoder.api.application.view.ApplicationInfoView;
 import org.lowcoder.api.application.view.ApplicationPermissionView;
@@ -17,20 +14,12 @@ import org.lowcoder.domain.application.model.Application;
 import org.lowcoder.domain.application.model.ApplicationStatus;
 import org.lowcoder.infra.constant.NewUrl;
 import org.lowcoder.infra.constant.Url;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = {Url.APPLICATION_URL, NewUrl.APPLICATION_URL})
@@ -115,7 +104,7 @@ public interface ApplicationEndpoints
 			tags = TAG_APPLICATION_MANAGEMENT,
 			operationId = "getMarketplaceApplicationDataInViewMode",
 			summary = "Get Marketplace Application data in view mode",
-			description = "Retrieve the DSL data of a Lowcoder Application in view-mode by its ID for the marketplace."
+			description = "Retrieve the DSL data of a Lowcoder Application in view-mode by its ID for the Marketplace."
 	)
 	@GetMapping("/{applicationId}/view_marketplace")
 	public Mono<ResponseView<ApplicationView>> getPublishedMarketPlaceApplication(@PathVariable String applicationId);
@@ -124,7 +113,7 @@ public interface ApplicationEndpoints
 			tags = TAG_APPLICATION_MANAGEMENT,
 			operationId = "getAgencyProfileApplicationDataInViewMode",
 			summary = "Get Agency profile Application data in view mode",
-			description = "Retrieve the DSL data of a Lowcoder Application in view-mode by its ID marked as agency profile."
+			description = "Retrieve the DSL data of a Lowcoder Application in view-mode by its ID marked as Agency Profile."
 	)
 	@GetMapping("/{applicationId}/view_agency")
 	public Mono<ResponseView<ApplicationView>> getAgencyProfileApplication(@PathVariable String applicationId);
@@ -171,12 +160,13 @@ public interface ApplicationEndpoints
 	@Operation(
 			tags = TAG_APPLICATION_MANAGEMENT,
 			operationId = "listMarketplaceApplications",
-			summary = "List marketplace Applications",
-			description = "Retrieve a list of Lowcoder Applications that are published to the marketplace"
+			summary = "List Marketplace Applications",
+			description = "Retrieve a list of Lowcoder Applications that are published to the Marketplace"
 	)
 	@GetMapping("/marketplace-apps")
 	public Mono<ResponseView<List<MarketplaceApplicationInfoView>>> getMarketplaceApplications(@RequestParam(required = false) Integer applicationType);
 
+	// Falk: why we use MarketplaceApplicationInfoView for AgencyProfile?
 	@Operation(
 			tags = TAG_APPLICATION_MANAGEMENT,
 			operationId = "listAgencyProfileApplications",
@@ -270,31 +260,10 @@ public interface ApplicationEndpoints
         }
     }
 
-	public record ApplicationPublicToMarketplaceRequest(Boolean publicToMarketplace, String title,
-														String description, String category, String image) {
+	public record ApplicationPublicToMarketplaceRequest(Boolean publicToMarketplace) {
 		@Override
 		public Boolean publicToMarketplace() {
 			return BooleanUtils.isTrue(publicToMarketplace);
-		}
-
-		@Override
-		public String title() {
-			return title;
-		}
-
-		@Override
-		public String description() {
-			return description;
-		}
-
-		@Override
-		public String category() {
-			return category;
-		}
-
-		@Override
-		public String image() {
-			return image;
 		}
 
 	}
@@ -304,12 +273,6 @@ public interface ApplicationEndpoints
 		public Boolean agencyProfile() {
 			return BooleanUtils.isTrue(agencyProfile);
 		}
-	}
-
-	public enum ApplicationRequestType {
-		PUBLIC_TO_ALL,
-		PUBLIC_TO_MARKETPLACE,
-		AGENCY_PROFILE,
 	}
 
     public record UpdatePermissionRequest(String role) {

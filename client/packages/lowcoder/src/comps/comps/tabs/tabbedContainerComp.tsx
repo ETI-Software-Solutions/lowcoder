@@ -3,7 +3,7 @@ import { JSONObject, JSONValue } from "util/jsonTypes";
 import { CompAction, CompActionTypes, deleteCompAction, wrapChildAction } from "lowcoder-core";
 import { DispatchType, RecordConstructorToView, wrapDispatch } from "lowcoder-core";
 import { AutoHeightControl } from "comps/controls/autoHeightControl";
-import { BooleanStateControl, booleanExposingStateControl, stringExposingStateControl } from "comps/controls/codeStateControl";
+import { stringExposingStateControl } from "comps/controls/codeStateControl";
 import { eventHandlerControl } from "comps/controls/eventHandlerControl";
 import { TabsOptionControl } from "comps/controls/optionsControl";
 import { styleControl } from "comps/controls/styleControl";
@@ -12,7 +12,7 @@ import { sameTypeMap, UICompBuilder, withDefault } from "comps/generators";
 import { addMapChildAction } from "comps/generators/sameTypeMap";
 import { NameConfig, NameConfigHidden, withExposingConfigs } from "comps/generators/withExposing";
 import { NameGenerator } from "comps/utils";
-import { ControlNode, Section, sectionNames } from "lowcoder-design";
+import { ScrollBar, Section, sectionNames } from "lowcoder-design";
 import { HintPlaceHolder } from "lowcoder-design";
 import _ from "lodash";
 import React, { useCallback, useContext } from "react";
@@ -28,11 +28,13 @@ import {
 import { BackgroundColorContext } from "comps/utils/backgroundColorContext";
 import { disabledPropertyView, hiddenPropertyView } from "comps/utils/propertyUtils";
 import { trans } from "i18n";
-import { BoolCodeControl } from "comps/controls/codeControl";
+import { BoolCodeControl, NumberControl } from "comps/controls/codeControl";
 import { DisabledContext } from "comps/generators/uiCompBuilder";
 import { EditorContext } from "comps/editorState";
 import { checkIsMobile } from "util/commonUtils";
-import { messageInstance } from "lowcoder-design";
+import { messageInstance } from "lowcoder-design/src/components/GlobalInstances";
+import { BoolControl } from "comps/controls/boolControl";
+import { PositionControl } from "comps/controls/dropdownControl";
 
 const EVENT_OPTIONS = [
   {
@@ -50,12 +52,16 @@ const childrenMap = {
     1: { layout: {}, items: {} },
   }),
   autoHeight: AutoHeightControl,
+  scrollbars: withDefault(BoolControl, false),
+  placement: withDefault(PositionControl, "top"),
   onEvent: eventHandlerControl(EVENT_OPTIONS),
   disabled: BoolCodeControl,
-  showHeader: withDefault(BooleanStateControl, "true"),
-  style: styleControl(TabContainerStyle),
+  showHeader: withDefault(BoolControl, true),
+  style: withDefault(styleControl(TabContainerStyle),{borderWidth:'1px'}),
   headerStyle: styleControl(ContainerHeaderStyle),
   bodyStyle: styleControl(ContainerBodyStyle),
+  tabsGutter: withDefault(NumberControl, 32),
+  tabsCentered: withDefault(BoolControl, false),
 };
 
 type ViewProps = RecordConstructorToView<typeof childrenMap>;
@@ -66,6 +72,7 @@ const getStyle = (
   headerStyle: ContainerHeaderStyleType,
   bodyStyle: ContainerBodyStyleType,
 ) => {
+  console.log("🚀 ~ style:", style)
   return css`
     &.ant-tabs {
       overflow: hidden;
@@ -73,7 +80,7 @@ const getStyle = (
       border-radius: ${style.radius};
       padding: ${style.padding};
       background-color: ${style.background};
-      background-image: ${style.backgroundImage};
+      background-image: url(${style.backgroundImage});
       background-repeat: ${style.backgroundImageRepeat};
       background-size: ${style.backgroundImageSize};
       background-position: ${style.backgroundImagePosition};
@@ -84,31 +91,29 @@ const getStyle = (
         .react-grid-layout {
           border-radius: 0;
           background-color: ${bodyStyle.background || 'transparent'};
-          background-image: ${bodyStyle.backgroundImage};
-          background-repeat: ${bodyStyle.backgroundImageRepeat};
-          background-size: ${bodyStyle.backgroundImageSize};
-          background-position: ${bodyStyle.backgroundImagePosition};
-          background-origin: ${bodyStyle.backgroundImageOrigin};
-
         }
       }
 
       > .ant-tabs-nav {
         background-color: ${headerStyle.headerBackground || 'transparent'};
-        background-image: ${headerStyle.headerBackgroundImage};
-        background-repeat: ${headerStyle.headerBackgroundImageRepeat};
-        background-size: ${headerStyle.headerBackgroundImageSize};
-        background-position: ${headerStyle.headerBackgroundImagePosition};
-        background-origin: ${headerStyle.headerBackgroundImageOrigin};
 
         .ant-tabs-tab {
           div {
-            color: ${style.tabText};
+            color: #8b8fa3;
           }
 
           &.ant-tabs-tab-active div {
             color: ${style.accent};
           }
+        }
+
+        .ant-tabs-tab-btn {
+          font-size: ${style.textSize};
+          font-family:${style.fontFamily};
+          font-weight:${style.textWeight};
+          text-transform:${style.textTransform};
+          text-decoration:${style.textDecoration};
+          font-style:${style.fontStyle};
         }
 
         .ant-tabs-ink-bar {
@@ -167,7 +172,7 @@ const StyledTabs = styled(Tabs)<{
 
 const ContainerInTab = (props: ContainerBaseProps) => {
   return (
-    <InnerGrid {...props} emptyRows={15} bgColor={"white"} hintPlaceholder={HintPlaceHolder} />
+    <InnerGrid {...props} emptyRows={15} hintPlaceholder={HintPlaceHolder} />
   );
 };
 
@@ -203,7 +208,7 @@ const TabbedContainer = (props: TabbedContainerProps) => {
   const editorState = useContext(EditorContext);
   const maxWidth = editorState.getAppSettings().maxWidth;
   const isMobile = checkIsMobile(maxWidth);
-  const showHeader = props.showHeader.value;
+  const showHeader = props.showHeader.valueOf();
   const paddingWidth = isMobile ? 8 : 0;
 
   const tabItems = visibleTabs.map((tab) => {
@@ -228,41 +233,49 @@ const TabbedContainer = (props: TabbedContainerProps) => {
       forceRender: true,
       children: (
         <BackgroundColorContext.Provider value={bodyStyle.background}>
-          <ContainerInTab
-            layout={containerProps.layout.getView()}
-            items={gridItemCompToGridItems(containerProps.items.getView())}
-            positionParams={containerProps.positionParams.getView()}
-            dispatch={childDispatch}
-            autoHeight={props.autoHeight}
-            containerPadding={[paddingWidth, 20]}
-          />
+          <ScrollBar style={{ height: props.autoHeight ? "100%" : "auto", margin: "0px", padding: "0px" }} hideScrollbar={!props.scrollbars}>
+            <ContainerInTab
+              layout={containerProps.layout.getView()}
+              items={gridItemCompToGridItems(containerProps.items.getView())}
+              positionParams={containerProps.positionParams.getView()}
+              dispatch={childDispatch}
+              autoHeight={props.autoHeight}
+              containerPadding={[paddingWidth, 20]}
+            />
+          </ScrollBar>
         </BackgroundColorContext.Provider>
       )
     }
   })
 
   return (
-    <div style={{padding: props.style.margin, height: '100%'}}>
-    <StyledTabs
-      activeKey={activeKey}
-      $style={style}
-      $headerStyle={headerStyle}
-      $bodyStyle={bodyStyle}
-      $showHeader={showHeader}
-      onChange={(key) => {
-        if (key !== props.selectedTabKey.value) {
-          props.selectedTabKey.onChange(key);
-          props.onEvent("change");
-        }
-      }}
-      onTabClick={onTabClick}
-      animated
-      $isMobile={isMobile}
-      // tabBarGutter={32}
-      items={tabItems}
-    >
-    </StyledTabs>
-    </div>
+    <ScrollBar style={{ height: props.autoHeight ? "100%" : "auto", margin: "0px", padding: "0px" }} hideScrollbar={!props.scrollbars}>
+      <div style={{padding: props.style.margin, height: props.autoHeight ? "100%" : "auto"}}>
+        <BackgroundColorContext.Provider value={headerStyle.headerBackground}>
+            <StyledTabs
+              tabPosition={props.placement}
+              activeKey={activeKey}
+              $style={style}
+              $headerStyle={headerStyle}
+              $bodyStyle={bodyStyle}
+              $showHeader={showHeader}
+              onChange={(key) => {
+                if (key !== props.selectedTabKey.value) {
+                  props.selectedTabKey.onChange(key);
+                  props.onEvent("change");
+                }
+              }}
+              onTabClick={onTabClick}
+              animated
+              $isMobile={isMobile}
+              items={tabItems}
+              tabBarGutter={props.tabsGutter}
+              centered={props.tabsCentered}
+            >
+          </StyledTabs>
+        </BackgroundColorContext.Provider>
+      </div>
+    </ScrollBar>
   );
 };
 
@@ -290,7 +303,7 @@ export const TabbedContainerBaseComp = (function () {
             <Section name={sectionNames.interaction}>
               {children.onEvent.getPropertyView()}
               {disabledPropertyView(children)}
-              {children.showHeader.propertyView({ label: trans("prop.showHeader") })}
+              {children.showHeader.propertyView({ label: trans("tabbedContainer.showTabs") })}
               {hiddenPropertyView(children)}
             </Section>
           )}
@@ -298,7 +311,15 @@ export const TabbedContainerBaseComp = (function () {
           {["layout", "both"].includes(useContext(EditorContext).editorModeStatus) && (
             <>
               <Section name={sectionNames.layout}>
+                {children.placement.propertyView({ label: trans("tabbedContainer.placement"), radioButton: true })}
+                {children.tabsCentered.propertyView({ label: trans("tabbedContainer.tabsCentered")})}
+                { children.tabsGutter.propertyView({ label: trans("tabbedContainer.gutter"), tooltip : trans("tabbedContainer.gutterTooltip") })}
                 {children.autoHeight.getPropertyView()}
+                {!children.autoHeight.getView() && (
+                  children.scrollbars.propertyView({
+                    label: trans("prop.scrollbar"),
+                  })
+                )}
               </Section>
               <Section name={sectionNames.style}>
                 {children.style.getPropertyView()}

@@ -27,8 +27,8 @@ import {
 import { default as Form } from "antd/es/form";
 
 export const Wrapper = styled.div<{
-  $editable: boolean;
-  $style: CalendarStyleType;
+  $editable?: boolean;
+  $style?: CalendarStyleType;
   $theme?: ThemeDetail;
   $left?: number;
 }>`
@@ -205,9 +205,14 @@ export const Wrapper = styled.div<{
       flex-direction: inherit;
     }
     .fc-day-today .fc-daygrid-day-number {
-      background-color: ${(props) => props.$theme?.primary ? props.$theme.primary : props.$style.background};
+      background-color: ${(props) =>
+        props.$theme?.primary ? props.$theme.primary : props.$style.background};
       color: ${(props) =>
-        contrastText(props.$theme?.primary || "", props.$theme?.textDark || "#000000", props.$theme?.textLight || "#ffffff")};
+        contrastText(
+          props.$theme?.primary || "",
+          props.$theme?.textDark || "#000000",
+          props.$theme?.textLight || "#ffffff"
+        )};
     }
     .fc-daygrid-day-events {
       padding: 1px 0 5px 0;
@@ -330,7 +335,8 @@ export const Wrapper = styled.div<{
         height: 20px;
         padding-left: 15px;
         font-weight: 500;
-        background-color: ${(props) => lightenColor(props.$style.background, 0.1)};
+        background-color: ${(props) =>
+          lightenColor(props.$style.background, 0.1)};
       }
     }
   }
@@ -368,7 +374,7 @@ export const Wrapper = styled.div<{
     }
     &:hover {
       .event-remove {
-        opacity: ${(props) => props.$editable ? 1 : undefined};
+        opacity: ${(props) => (props.$editable ? 1 : undefined)};
       }
     }
   }
@@ -398,7 +404,8 @@ export const Wrapper = styled.div<{
   // border-radius, bg
   .fc-theme-standard .fc-list {
     background-color: ${(props) => props.$style.background};
-    border-radius: ${(props) => `0 0 ${props.$style.radius} ${props.$style.radius}`};
+    border-radius: ${(props) =>
+      `0 0 ${props.$style.radius} ${props.$style.radius}`};
     border-color: ${(props) => props.$style.border};
     border-top-color: ${(props) =>
       toHex(props.$style.border) === "#D7D9E0"
@@ -406,7 +413,8 @@ export const Wrapper = styled.div<{
         : lightenColor(props.$style.border, 0.03)};
   }
   .fc-scrollgrid-liquid {
-    border-radius: ${(props) => `0 0 ${props.$style.radius} ${props.$style.radius}`};
+    border-radius: ${(props) =>
+      `0 0 ${props.$style.radius} ${props.$style.radius}`};
     overflow: hidden;
     border-right-width: 1px;
     border-bottom-width: 1px;
@@ -459,7 +467,8 @@ export const Wrapper = styled.div<{
     margin-bottom: 0;
     border: 1px solid ${(props) => props.$style.border};
     border-bottom: none;
-    border-radius: ${(props) => `${props.$style.radius} ${props.$style.radius} 0 0`};
+    border-radius: ${(props) =>
+      `${props.$style.radius} ${props.$style.radius} 0 0`};
     background-color: ${(props) => props.$style.background};
   }
   .fc-toolbar-title {
@@ -488,7 +497,9 @@ export const Wrapper = styled.div<{
         border-color: ${(props) =>
           toHex(props.$style.headerBtnBackground) === "#FFFFFF"
             ? "#D7D9E0"
-            : backgroundToBorder(genHoverColor(props.$style.headerBtnBackground))};
+            : backgroundToBorder(
+                genHoverColor(props.$style.headerBtnBackground)
+              )};
       }
     }
     &:not(:disabled):focus {
@@ -500,7 +511,8 @@ export const Wrapper = styled.div<{
       &,
       &:hover {
         background-color: ${(props) => props.$style.headerBtnBackground};
-        border-color: ${(props) => backgroundToBorder(props.$style.headerBtnBackground)};
+        border-color: ${(props) =>
+          backgroundToBorder(props.$style.headerBtnBackground)};
         color: ${(props) =>
           toHex(props.$style.btnText) === "#222222"
             ? "#B8B9BF"
@@ -518,7 +530,8 @@ export const Wrapper = styled.div<{
     font-size: 14px;
     margin-left: 8px;
     background-color: ${(props) => props.$style.headerBtnBackground};
-    border-color: ${(props) => backgroundToBorder(props.$style.headerBtnBackground)};
+    border-color: ${(props) =>
+      backgroundToBorder(props.$style.headerBtnBackground)};
     color: ${(props) => props.$style.btnText};
     &.fc-today-button {
       min-width: 52px;
@@ -538,8 +551,8 @@ export const Wrapper = styled.div<{
       toHex(props.$style.headerBtnBackground) === "#FFFFFF"
         ? "#EFEFF1"
         : isDarkColor(props.$style.headerBtnBackground)
-        ? props.$style.headerBtnBackground
-        : darkenColor(props.$style.headerBtnBackground, 0.1)};
+          ? props.$style.headerBtnBackground
+          : darkenColor(props.$style.headerBtnBackground, 0.1)};
     border-radius: 4px;
     margin-left: 16px;
     .fc-button-primary {
@@ -585,10 +598,13 @@ export const Wrapper = styled.div<{
     }
     .fc-day-today.fc-col-header-cell {
       background-color: ${(props) =>
-        isDarkColor(props.$style.background) ? "#ffffff19" : toHex(props.$theme?.primary!) + "19"};
+        isDarkColor(props.$style.background)
+          ? "#ffffff19"
+          : toHex(props.$theme?.primary!) + "19"};
       a {
         color: ${(props) =>
-          !isDarkColor(props.$style.background) && darkenColor(props.$theme?.primary!, 0.1)};
+          !isDarkColor(props.$style.background) &&
+          darkenColor(props.$theme?.primary!, 0.1)};
       }
     }
     .fc-col-header-cell-cushion {
@@ -619,7 +635,7 @@ export const Wrapper = styled.div<{
   }
 `;
 
-export const Remove = styled.div<{ isList: boolean }>`
+export const Remove = styled.div<{ $isList: boolean }>`
   position: absolute;
   pointer-events: auto;
   top: 0;
@@ -636,20 +652,21 @@ export const Remove = styled.div<{ isList: boolean }>`
 `;
 
 export const Event = styled.div<{
-  bg: string;
+  $bg: string;
   theme: Object;
-  isList: boolean;
-  allDay: boolean;
+  $isList: boolean;
+  $allDay: boolean;
   $style: CalendarStyleType;
 }>`
   height: 100%;
   width: 100%;
   pointer-events: none;
   border-radius: 4px;
-  box-shadow: ${(props) => !props.isList && "0 0 5px 0 rgba(0, 0, 0, 0.15)"};
+  box-shadow: ${(props) => !props.$isList && "0 0 5px 0 rgba(0, 0, 0, 0.15)"};
   border: 1px solid ${(props) => props.$style.border};
-  display: ${(props) => props.isList && "flex"};
-  background-color: ${(props) => !props.isList && lightenColor(props.$style.background, 0.1)};
+  display: ${(props) => props.$isList && "flex"};
+  background-color: ${(props) =>
+    !props.$isList && lightenColor(props.$style.background, 0.1)};
   overflow: hidden;
   font-size: 13px;
   line-height: 19px;
@@ -665,19 +682,21 @@ export const Event = styled.div<{
     left: 2px;
     top: 2px;
     border-radius: 3px;
-    background-color: ${(props) => props.bg};
+    background-color: ${(props) => props.$bg};
   }
 
   .event-time {
     color: ${(props) =>
-      !props.isList &&
-      (isDarkColor(props.$style.text) ? lightenColor(props.$style.text, 0.2) : props.$style.text)};
+      !props.$isList &&
+      (isDarkColor(props.$style.text)
+        ? lightenColor(props.$style.text, 0.2)
+        : props.$style.text)};
     margin-left: 15px;
     white-space: pre-wrap;
     margin-top: 2px;
   }
   .event-title {
-    color: ${(props) => !props.isList && props.$style.text};
+    color: ${(props) => !props.$isList && props.$style.text};
     font-weight: 500;
     margin-left: 15px;
     white-space: pre-wrap;
@@ -710,14 +729,15 @@ export const Event = styled.div<{
     }
   }
   &.past {
-    background-color: ${(props) => isDarkColor(props.$style.background) && props.$style.background};
+    background-color: ${(props) =>
+      isDarkColor(props.$style.background) && props.$style.background};
     &::before {
       background-color: ${(props) =>
         toHex(props.$style.text) === "#3C3C3C"
           ? "#8B8FA3"
           : isDarkColor(props.$style.text)
-          ? lightenColor(props.$style.text, 0.3)
-          : props.$style.text};
+            ? lightenColor(props.$style.text, 0.3)
+            : props.$style.text};
     }
     &::before,
     .event-title,
@@ -743,6 +763,7 @@ export const FormWrapper = styled(Form)`
 
 export type EventType = {
   id?: string;
+  resourceId?: string;
   label?: string;
   title?: string;
   start?: string;
@@ -754,13 +775,28 @@ export type EventType = {
 };
 
 export enum ViewType {
+  YEAR = "multiMonthYear",
   MONTH = "dayGridMonth",
   WEEK = "timeGridWeek",
   DAY = "timeGridDay",
+  DAYLIST = "dayGridDay",
   LIST = "listWeek",
+  TIMEGRID = "timeGridDay",
 }
 
-export const DefaultViewOptions = [
+export const DefaultWithPremiumViewOptions = [
+  {
+    label: trans("calendar.resourceTimeGridDay"),
+    value: "resourceTimeGridDay",
+  },
+  {
+    label: trans("calendar.timeline"),
+    value: "resourceTimelineDay",
+  },
+  {
+    label: trans("calendar.year"),
+    value: "multiMonthYear",
+  },
   {
     label: trans("calendar.month"),
     value: "dayGridMonth",
@@ -768,6 +804,45 @@ export const DefaultViewOptions = [
   {
     label: trans("calendar.week"),
     value: "timeGridWeek",
+  },
+  {
+    label: trans("calendar.weekdaygrid"),
+    value: "dayGridWeek",
+  },
+  {
+    label: trans("calendar.daygrid"),
+    value: "dayGridDay",
+  },
+  {
+    label: trans("calendar.day"),
+    value: "timeGridDay",
+  },
+  {
+    label: trans("calendar.list"),
+    value: "listWeek",
+  },
+] as const;
+
+export const DefaultWithFreeViewOptions = [
+  {
+    label: trans("calendar.year"),
+    value: "multiMonthYear",
+  },
+  {
+    label: trans("calendar.month"),
+    value: "dayGridMonth",
+  },
+  {
+    label: trans("calendar.week"),
+    value: "timeGridWeek",
+  },
+  {
+    label: trans("calendar.weekdaygrid"),
+    value: "dayGridWeek",
+  },
+  {
+    label: trans("calendar.daygrid"),
+    value: "dayGridDay",
   },
   {
     label: trans("calendar.day"),
@@ -815,7 +890,7 @@ export const defaultData = [
     id: "1",
     title: "Coding",
     start: dayjs().hour(10).minute(0).second(0).format(DATE_TIME_FORMAT),
-    end: dayjs().hour(11).minute(30).second(0).format(DATE_TIME_FORMAT),
+    end: dayjs().hour(12).minute(30).second(0).format(DATE_TIME_FORMAT),
     color: "#079968",
   },
   {
@@ -826,11 +901,64 @@ export const defaultData = [
     allDay: true,
   },
 ];
+export const resourcesEventsDefaultData = [
+  {
+    id: "1",
+    resourceId: "d1",
+    title: "event 1",
+    start: dayjs().hour(10).minute(0).second(0).format(DATE_TIME_FORMAT),
+    end: dayjs().hour(17).minute(30).second(0).format(DATE_TIME_FORMAT),
+    color: "#079968",
+  },
+  {
+    id: "2",
+    resourceId: "b",
+    title: "event 5",
+    start: dayjs().hour(8).minute(0).second(0).format(DATE_TIME_FORMAT),
+    end: dayjs().hour(16).minute(30).second(0).format(DATE_TIME_FORMAT),
+    color: "#079968",
+  },
+  {
+    id: "3",
+    resourceId: "a",
+    title: "event 3",
+    start: dayjs().hour(12).minute(0).second(0).format(DATE_TIME_FORMAT),
+    end: dayjs().hour(21).minute(30).second(0).format(DATE_TIME_FORMAT),
+    color: "#079968",
+  },
+];
+
+export const resourcesDefaultData = [
+  {
+    id: "a",
+    title: "Auditorium A",
+  },
+  {
+    id: "b",
+    title: "Auditorium B",
+    eventColor: "green",
+  },
+  {
+    id: "d",
+    title: "Auditorium D",
+    children: [
+      {
+        id: "d1",
+        title: "Room D1",
+      },
+      {
+        id: "d2",
+        title: "Room D2",
+      },
+    ],
+  },
+];
 
 export const buttonText = {
   today: trans("calendar.today"),
   month: trans("calendar.month"),
   week: trans("calendar.week"),
+  timeline: trans("calendar.timeline"),
   day: trans("calendar.day"),
   list: trans("calendar.list"),
 };
@@ -840,10 +968,22 @@ export const headerToolbar = {
   right: "prev today next dayGridMonth,timeGridWeek,timeGridDay,listWeek",
 };
 
+export const resourceTimeLineHeaderToolbar = {
+  left: "title",
+  right:
+    "prev today next resourceTimelineMonth,resourceTimelineWeek,resourceTimelineDay",
+};
+export const resourceTimeGridHeaderToolbar = {
+  left: "title",
+  right: "prev today next",
+};
+
 const weekHeadContent = (info: DayHeaderContentArg) => {
   const text = info.text.split(" ");
   return {
-    html: `<span class="week-head ${info.isPast && "past"} ${info.isToday && "today"}">
+    html: `<span class="week-head ${info.isPast && "past"} ${
+      info.isToday && "today"
+    }">
   <span class="week">${text[0]}</span>
   <span class="day">${text[1]}</span>
   </span>`,
@@ -882,7 +1022,17 @@ export const slotLabelFormat = [
   {
     hour: "2-digit",
     minute: "2-digit",
-  },
+  }, 
+] as FormatterInput[];
+
+export const slotLabelFormatWeek = [
+  { week: "short" },
+  { hour: "2-digit" }, 
+] as FormatterInput[];
+
+export const slotLabelFormatMonth = [
+  { week: "short" },
+  { weekday: "short" }
 ] as FormatterInput[];
 
 export const viewClassNames = (info: ViewContentArg) => {

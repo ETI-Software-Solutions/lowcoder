@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { HomeLayout } from "./HomeLayout";
-import { MARKETPLACE_TYPE_URL, MARKETPLACE_URL } from "constants/routesURL";
+import { MARKETPLACE_URL } from "constants/routesURL";
 import { trans } from "../../i18n";
 import axios, { AxiosResponse } from "axios";
 import ApplicationApi from "@lowcoder-ee/api/applicationApi";
-import { ApplicationMeta, MarketplaceType } from "@lowcoder-ee/constants/applicationConstants";
+import { ApplicationMeta } from "@lowcoder-ee/constants/applicationConstants";
 import { GenericApiResponse } from "@lowcoder-ee/api/apiResponses";
 import { validateResponse } from "@lowcoder-ee/api/apiUtils";
-import { messageInstance } from "lowcoder-design";
-import { matchPath } from "react-router";
-import log from "loglevel";
+import { messageInstance } from "lowcoder-design/src/components/GlobalInstances";
+import { Helmet } from "react-helmet";
 
 export function MarketplaceView() {
   const [ marketplaceApps, setMarketplaceApps ] = useState<Array<ApplicationMeta>>([]);
@@ -46,17 +45,22 @@ export function MarketplaceView() {
   }
 
   useEffect(() => {
-    fetchMarketplaceApps();
+    // Make sure we are fetching local marketplace apps for self-hosted environments
+    if (window.location.host !== 'app.lowcoder.cloud') {
+      fetchMarketplaceApps();
+    }
     fetchLocalMarketplaceApps();
   }, []);
 
   return (
-    <HomeLayout
-      elements={[]}
-      localMarketplaceApps={localMarketplaceApps}
-      globalMarketplaceApps={marketplaceApps}
-      breadcrumb={[{ text: trans("home.marketplace"), path: MARKETPLACE_URL }]}
-      mode={"marketplace"}
-    />
+    <>
+      <Helmet>{<title>{trans("home.marketplace")}</title>}</Helmet>
+      <HomeLayout
+        elements={[]}
+        localMarketplaceApps={localMarketplaceApps}
+        globalMarketplaceApps={marketplaceApps}
+        breadcrumb={[{ text: trans("home.marketplace"), path: MARKETPLACE_URL }]}
+        mode={"marketplace"} />
+    </>
   );
 };

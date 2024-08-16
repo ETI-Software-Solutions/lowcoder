@@ -47,18 +47,22 @@ export function saveEditorModeStatus(editorModeStatus: EditorModeStatus) {
 }
 //ADDED BY FRED TO SAVE enabledCollision
 export function saveCollisionStatus(
-  collisionStatus: DisabledCollisionStatus
+  collisionStatus: boolean
 ) {
-  localStorage.setItem("disable_collision", collisionStatus);
+  localStorage.setItem("disableCollision", String(collisionStatus));
 }
 
-export const DefaultCollisionStatus: DisabledCollisionStatus = "true";
-export function getCollisionStatus(): DisabledCollisionStatus {
-  const str = localStorage.getItem("disable_collision");
-  if (!str) {
-    return DefaultCollisionStatus;
+// export const DefaultCollisionStatus: DisabledCollisionStatus = "true";
+export function getCollisionStatus(): boolean {
+  const str = localStorage.getItem("disableCollision");
+  if (str === 'true') {
+    return true;
   }
-  return str as DisabledCollisionStatus;
+  return false;
+}
+
+export function removeCollisionStatus() {
+  localStorage.removeItem("disableCollision");
 }
 
 export const DefaultEditorModeStatus: EditorModeStatus = "both";
@@ -102,11 +106,11 @@ export function getMainCompValue(): object {
 export type HomeLayoutType = "list" | "card";
 
 export function saveHomeLayout(layout: HomeLayoutType) {
-  localStorage.setItem("home_layout", layout);
+  localStorage.setItem("lowcoder_home_layout", layout);
 }
 
 export function getHomeLayout(): HomeLayoutType {
-  const layout = localStorage.getItem("home_layout");
+  const layout = localStorage.getItem("lowcoder_home_layout");
   return layout === "list" || layout === "card" ? layout : "card";
 }
 

@@ -33,7 +33,7 @@ const getStyle = (style: ModalStyleType) => {
       border: ${style.borderWidth} solid ${style.border};
       overflow: hidden;
       background-color: ${style.background};
-      ${style.backgroundImage ? `background-image: ${style.backgroundImage} !important; ` : ';'}
+      ${style.backgroundImage ? `background-image: url(${style.backgroundImage}) !important; ` : ';'}
       ${style.backgroundImageRepeat ? `background-repeat: ${style.backgroundImageRepeat};` : 'no-repeat;'}
       ${style.backgroundImageSize ? `background-size: ${style.backgroundImageSize};` : 'cover'}
       ${style.backgroundImagePosition ? `background-position: ${style.backgroundImagePosition};` : 'center;'}
@@ -161,7 +161,7 @@ let TmpModalComp = (function () {
                 items={gridItemCompToGridItems(items)}
                 autoHeight={props.autoHeight}
                 minHeight={paddingValues ? DEFAULT_HEIGHT - paddingValues[0] * 2 + "px" : ""}
-                containerPadding={paddingValues ? [paddingValues[0], paddingValues[1]] : [24,24]}
+                containerPadding={paddingValues ? [paddingValues[0] ?? 0, paddingValues[1] ?? 0] : [24,24]}
                 hintPlaceholder={HintPlaceHolder}
               />
             </Modal>

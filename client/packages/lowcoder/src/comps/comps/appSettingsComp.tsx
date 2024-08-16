@@ -1,7 +1,7 @@
 import { ThemeDetail, ThemeType } from "api/commonSettingApi";
 import { RecordConstructorToComp } from "lowcoder-core";
 import { dropdownInputSimpleControl } from "comps/controls/dropdownInputSimpleControl";
-import { MultiCompBuilder, valueComp } from "comps/generators";
+import { MultiCompBuilder, valueComp, withDefault } from "comps/generators";
 import { AddIcon, Dropdown } from "lowcoder-design";
 import { EllipsisSpan } from "pages/setting/theme/styledComponents";
 import { useEffect } from "react";
@@ -14,6 +14,11 @@ import { default as Divider } from "antd/es/divider";
 import { THEME_SETTING } from "constants/routesURL";
 import { CustomShortcutsComp } from "./customShortcutsComp";
 import { DEFAULT_THEMEID } from "comps/utils/themeUtil";
+import { StringControl } from "comps/controls/codeControl";
+import { IconControl } from "comps/controls/iconControl";
+import { dropdownControl } from "comps/controls/dropdownControl";
+import { ApplicationCategoriesEnum } from "constants/applicationConstants";
+import { BoolControl } from "../controls/boolControl";
 
 const TITLE = trans("appSetting.title");
 const USER_DEFINE = "__USER_DEFINE";
@@ -92,9 +97,37 @@ const SettingsStyled = styled.div`
 `;
 
 const DivStyled = styled.div`
-  div {
-    width: 100%;
-    display: block;
+  > div {
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    
+    > div {
+      width: 100%;
+      display: block;
+    }
+
+    > div:first-child {
+      margin-bottom: 6px;
+    }
+    
+    .tooltipLabel {
+      white-space: nowrap;
+    }
+
+  }
+  // custom styles for icon selector
+  .app-icon {
+    > div {
+      margin-bottom: 0;
+
+      > div:first-child {
+        margin-bottom: 6px;
+      }
+      > div:nth-child(2) {
+        width: 88%;
+        display: inline-block;
+      }
+    }
   }
 `;
 
@@ -134,10 +167,27 @@ const DividerStyled = styled(Divider)`
   border-color: #e1e3eb;
 `;
 
+type AppCategoriesEnumKey = keyof typeof ApplicationCategoriesEnum
+const AppCategories = Object.keys(ApplicationCategoriesEnum).map(
+  (cat) => {
+    const value = ApplicationCategoriesEnum[cat as AppCategoriesEnumKey];
+    return {
+      label: value,
+      value: cat
+    }
+  }
+)
+
 const childrenMap = {
+  title: withDefault(StringControl, ''),
+  description: withDefault(StringControl, ''),
+  icon: IconControl,
+  category: dropdownControl(AppCategories, ApplicationCategoriesEnum.BUSINESS),
+  showHeaderInPublic: withDefault(BoolControl, true),
   maxWidth: dropdownInputSimpleControl(OPTIONS, USER_DEFINE, "1920"),
   themeId: valueComp<string>(DEFAULT_THEMEID),
   customShortcuts: CustomShortcutsComp,
+  disableCollision: valueComp<boolean>(false),
 };
 type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
   themeList: ThemeType[];
@@ -145,7 +195,17 @@ type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
 };
 
 function AppSettingsModal(props: ChildrenInstance) {
-  const { themeList, defaultTheme, themeId, maxWidth } = props;
+  const {
+    themeList,
+    defaultTheme,
+    themeId,
+    maxWidth,
+    title,
+    description,
+    icon,
+    category,
+    showHeaderInPublic,
+  } = props;
   const THEME_OPTIONS = themeList?.map((theme) => ({
     label: theme.name,
     value: theme.id + "",
@@ -181,6 +241,28 @@ function AppSettingsModal(props: ChildrenInstance) {
     <SettingsStyled>
       <Title>{TITLE}</Title>
       <DivStyled>
+        {title.propertyView({
+          label: trans("appSetting.appTitle"),
+          placeholder: trans("appSetting.appTitle")
+        })}
+        {description.propertyView({
+          label: trans("appSetting.appDescription"),
+          placeholder: trans("appSetting.appDescription")
+        })}
+        {category.propertyView({
+          label: trans("appSetting.appCategory"),
+        })}
+        <div className="app-icon">
+          {icon.propertyView({
+            label: trans("icon"),
+            tooltip: trans("aggregation.iconTooltip"),
+          })}
+        </div>
+        <div style={{ margin: '20px 0'}}>
+          {showHeaderInPublic.propertyView({
+            label: trans("appSetting.showPublicHeader"),
+          })}
+        </div>
         {maxWidth.propertyView({
           dropdownLabel: trans("appSetting.canvasMaxWidth"),
           inputLabel: trans("appSetting.userDefinedMaxWidth"),
@@ -188,9 +270,6 @@ function AppSettingsModal(props: ChildrenInstance) {
           placement: "bottom",
           min: 350,
           lastNode: <span>{trans("appSetting.maxWidthTip")}</span>,
-          labelStyle: {marginBottom: "8px"},
-          dropdownStyle: {marginBottom: "12px"},
-          inputStyle: {marginBottom: "12px"}
         })}
         <Dropdown
           defaultValue={
@@ -204,8 +283,6 @@ function AppSettingsModal(props: ChildrenInstance) {
           options={THEME_OPTIONS}
           label={trans("appSetting.themeSetting")}
           placement="bottom"
-          labelStyle={{marginBottom: "8px"}}
-          dropdownStyle={{marginBottom: "12px"}}
           itemNode={(value) => <DropdownItem value={value} />}
           preNode={() => (
             <>

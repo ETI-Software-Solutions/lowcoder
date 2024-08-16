@@ -1,8 +1,8 @@
-import { JSONValue } from "util/jsonTypes";
-import { ExtraActionType } from "lowcoder-core";
-import { CommonSettingResponseData } from "api/commonSettingApi";
-import { PermissionItem } from "../components/PermissionDialog/PermissionList";
-import { UiLayoutType } from "comps/comps/uiComp";
+import type { JSONValue } from "util/jsonTypes";
+import type { ExtraActionType } from "lowcoder-core";
+import type { CommonSettingResponseData } from "api/commonSettingApi";
+import type { PermissionItem } from "../components/PermissionDialog/PermissionList";
+import type { UiLayoutType } from "comps/comps/uiComp";
 
 // To be same with HomeResTypeEnum
 export enum AppTypeEnum {
@@ -11,9 +11,12 @@ export enum AppTypeEnum {
   NavLayout = 3,
   // 4 folder, 5 mobile
   MobileTabLayout = 6,
+  // WorkflowScreen = 7,
+  // Slide = 8,
 }
 
 export enum ApplicationCategoriesEnum {
+  SUPPORT = "Support",
   BUSINESS = "Business",
   DASHBOARD = "Dashboards & Reporting",
   SLIDES = "Slides & Presentations",
@@ -52,6 +55,8 @@ export const AppUILayoutType: Record<AppTypeEnum, UiLayoutType> = {
   [AppTypeEnum.Module]: "module",
   [AppTypeEnum.NavLayout]: "nav",
   [AppTypeEnum.MobileTabLayout]: "mobileTabLayout",
+  // [AppTypeEnum.WorkflowScreen]: "module",
+  // [AppTypeEnum.Slide]: "normal",
 };
 
 export type ApplicationDSLType = "editing" | "published" | "view_marketplace";
@@ -61,6 +66,7 @@ export type ApplicationPermissionType = "USER" | "GROUP" | "ORG_ADMIN";
 export interface ApplicationExtra {
   moduleHeight?: number;
   moduleWidth?: number;
+  layers?: boolean;
 }
 
 export interface ApplicationMeta {
@@ -73,7 +79,7 @@ export interface ApplicationMeta {
   creatorEmail?: string;
   title?: string;
   description?: string;
-  icon?: string;
+  image?: string;
   category?: ApplicationCategoriesEnum;
   showheader?: boolean;
   orgId: string;
@@ -124,7 +130,8 @@ export interface AppPermissionInfo {
   publicToMarketplace: boolean;
 }
 
-export type AppViewMode = "edit" | "preview" | "view" | "view_marketplace";
+// adding viewMode for marketplace and adminMode for Admin area use
+export type AppViewMode = "edit" | "preview" | "view" | "view_marketplace" | "admin";
 
 export type AppPathParams = {
   viewMode: AppViewMode;

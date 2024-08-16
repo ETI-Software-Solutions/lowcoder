@@ -1,223 +1,74 @@
 package org.lowcoder.domain.application.service;
 
-
-import static org.lowcoder.domain.application.ApplicationUtil.getDependentModulesFromDsl;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
 import org.lowcoder.domain.application.model.Application;
+import org.lowcoder.domain.application.model.ApplicationRequestType;
 import org.lowcoder.domain.application.model.ApplicationStatus;
-import org.lowcoder.domain.application.repository.ApplicationRepository;
-import org.lowcoder.domain.permission.model.ResourceRole;
-import org.lowcoder.domain.permission.service.ResourcePermissionService;
 import org.lowcoder.infra.annotation.NonEmptyMono;
-import org.lowcoder.infra.mongo.MongoUpsertHelper;
-import org.lowcoder.sdk.constants.FieldName;
-import org.lowcoder.sdk.exception.BizError;
-import org.lowcoder.sdk.exception.BizException;
-import org.lowcoder.sdk.models.HasIdAndAuditing;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Lazy
-@Service
-@Slf4j
-public class ApplicationService {
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+public interface ApplicationService {
+    Mono<Application> findById(String id);
 
-    @Autowired
-    private MongoUpsertHelper mongoUpsertHelper;
+    Mono<Application> findByIdWithoutDsl(String id);
 
-    @Autowired
-    private ResourcePermissionService resourcePermissionService;
+    Mono<Boolean> updateById(String applicationId, Application application);
 
-    @Autowired
-    private ApplicationRepository repository;
+    Mono<Boolean> updatePublishedApplicationDSL(String applicationId, Map<String, Object> applicationDSL);
 
-    public Mono<Application> findById(String id) {
-        if (id == null) {
-            return Mono.error(new BizException(BizError.INVALID_PARAMETER, "INVALID_PARAMETER", FieldName.ID));
-        }
+    Mono<Application> publish(String applicationId);
 
-        return repository.findByIdWithDsl(id)
-                .switchIfEmpty(Mono.error(new BizException(BizError.NO_RESOURCE_FOUND, "CANT_FIND_APPLICATION", id)));
-    }
+    Mono<Application> create(Application newApplication, String visitorId);
 
-    public Mono<Application> findByIdWithoutDsl(String id) {
-        if (id == null) {
-            return Mono.error(new BizException(BizError.INVALID_PARAMETER, "INVALID_PARAMETER", FieldName.ID));
-        }
+    Flux<Application> findByOrganizationIdWithDsl(String organizationId);
 
-        return repository.findById(id)
-                .switchIfEmpty(Mono.error(new BizException(BizError.NO_RESOURCE_FOUND, "CANT_FIND_APPLICATION", id)));
-    }
+    Flux<Application> findByOrganizationIdWithoutDsl(String organizationId);
 
-    public Mono<Boolean> updateById(String applicationId, Application application) {
-        if (applicationId == null) {
-            return Mono.error(new BizException(BizError.INVALID_PARAMETER, "INVALID_PARAMETER", FieldName.ID));
-        }
+    Flux<Application> findAllMarketplaceApps();
 
-        return mongoUpsertHelper.updateById(application, applicationId);
-    }
+    Flux<Application> findAllAgencyProfileApps();
 
+    Mono<Long> countByOrganizationId(String orgId, ApplicationStatus applicationStatus);
 
-    public Mono<Boolean> updatePublishedApplicationDSL(String applicationId, Map<String, Object> applicationDSL) {
-        Application application = Application.builder().publishedApplicationDSL(applicationDSL).build();
-        return mongoUpsertHelper.updateById(application, applicationId);
-    }
+    Flux<Application> findByIdIn(List<String> applicationIds);
 
-    public Mono<Application> publish(String applicationId) {
-        return findById(applicationId)
-                .flatMap(newApplication -> { // copy editingApplicationDSL to publishedApplicationDSL
-                    Map<String, Object> editingApplicationDSL = newApplication.getEditingApplicationDSL();
-                    return updatePublishedApplicationDSL(applicationId, editingApplicationDSL)
-                            .thenReturn(newApplication);
-                });
-    }
+    Mono<List<Application>> getAllDependentModulesFromApplicationId(String applicationId, boolean viewMode);
 
-    public Mono<Application> create(Application newApplication, String visitorId) {
-        return repository.save(newApplication)
-                .delayUntil(app -> resourcePermissionService.addApplicationPermissionToUser(app.getId(), visitorId, ResourceRole.OWNER));
-    }
+    Mono<List<Application>> getAllDependentModulesFromApplication(Application application, boolean viewMode);
 
-    /**
-     * If you don't need dsl, please use {@link #findByOrganizationIdWithoutDsl(String)}
-     */
-    public Flux<Application> findByOrganizationIdWithDsl(String organizationId) {
-        return repository.findByOrganizationIdWithDsl(organizationId);
-    }
+    Mono<List<Application>> getAllDependentModulesFromDsl(Map<String, Object> dsl);
 
-    public Flux<Application> findByOrganizationIdWithoutDsl(String organizationId) {
-        return repository.findByOrganizationId(organizationId);
-    }
+    Mono<Boolean> setApplicationPublicToAll(String applicationId, boolean publicToAll);
 
-    public Flux<Application> findAllMarketplaceApps() {
-        return repository.findByPublicToAllIsTrueAndPublicToMarketplaceIsTrue();
-    }
+    // Falk: String title, String category, String description, String image will be set in Application Settings inside DSL by Frontend
+    Mono<Boolean> setApplicationPublicToMarketplace(String applicationId, Boolean publicToMarketplace);
 
-    public Flux<Application> findAllAgencyProfileApps() {
-        return repository.findByPublicToAllIsTrueAndAgencyProfileIsTrue();
-    }
-
-    public Mono<Long> countByOrganizationId(String orgId, ApplicationStatus applicationStatus) {
-        return repository.countByOrganizationIdAndApplicationStatus(orgId, applicationStatus);
-    }
-
-    public Flux<Application> findByIdIn(List<String> applicationIds) {
-        return repository.findByIdIn(applicationIds);
-    }
-
-    public Mono<List<Application>> getAllDependentModulesFromApplicationId(String applicationId, boolean viewMode) {
-        return findById(applicationId)
-                .flatMap(app -> getAllDependentModulesFromApplication(app, viewMode));
-    }
-
-    public Mono<List<Application>> getAllDependentModulesFromApplication(Application application, boolean viewMode) {
-        Map<String, Object> dsl = viewMode ? application.getLiveApplicationDsl() : application.getEditingApplicationDSL();
-        return getAllDependentModulesFromDsl(dsl);
-    }
-
-    public Mono<List<Application>> getAllDependentModulesFromDsl(Map<String, Object> dsl) {
-        Set<String> circularDependencyCheckSet = Sets.newHashSet();
-        return Mono.just(getDependentModulesFromDsl(dsl))
-                .doOnNext(circularDependencyCheckSet::addAll)
-                .flatMapMany(moduleSet -> findByIdIn(Lists.newArrayList(moduleSet)))
-                .onErrorContinue((e, i) -> log.warn("get dependent modules on error continue , {}", e.getMessage()))
-                .expandDeep(module -> getDependentModules(module, circularDependencyCheckSet))
-                .collectList();
-    }
-
-    private Flux<Application> getDependentModules(Application module, Set<String> circularDependencyCheckSet) {
-        return Flux.fromIterable(module.getLiveModules())
-                .filter(moduleId -> !circularDependencyCheckSet.contains(moduleId))
-                .doOnNext(circularDependencyCheckSet::add)
-                .collectList()
-                .flatMapMany(this::findByIdIn)
-                .onErrorContinue((e, i) -> log.warn("get dependent modules on error continue , {}", e.getMessage()));
-    }
-
-    public Mono<Boolean> setApplicationPublicToAll(String applicationId, boolean publicToAll) {
-        Application application = Application.builder()
-                .publicToAll(publicToAll)
-                .build();
-        return mongoUpsertHelper.updateById(application, applicationId);
-    }
-
-    public Mono<Boolean> setApplicationPublicToMarketplace(String applicationId, Boolean publicToMarketplace,
-                                                           String title, String category, String description, String image) {
-
-        return findById(applicationId)
-                .map(application -> {
-                    Map<String, Object> applicationDsl = application.getEditingApplicationDSL();
-                    if (applicationDsl.containsKey("ui")) {
-                        Map<String, Object> dataObject = (Map<String, Object>) applicationDsl.get("ui");
-
-                        if(publicToMarketplace) {
-                            Map<String, Object> marketplaceMeta = new HashMap<>();
-                            marketplaceMeta.put("title", title);
-                            marketplaceMeta.put("description", description);
-                            marketplaceMeta.put("category", category);
-                            marketplaceMeta.put("image", image);
-                            if (dataObject.containsKey("marketplaceMeta")) {
-                                dataObject.replace("marketplaceMeta", marketplaceMeta);
-                            } else {
-                                dataObject.put("marketplaceMeta", marketplaceMeta);
-                            }
-                        } else {
-                            dataObject.remove("marketplaceMeta");
-                        }
-
-                        applicationDsl.replace("ui", dataObject);
-
-                    }
-
-                    return Application.builder()
-                            .publicToMarketplace(publicToMarketplace)
-                            .editingApplicationDSL(applicationDsl)
-                            .build();
-
-                })
-                .flatMap(application -> mongoUpsertHelper.updateById(application, applicationId));
-
-
-    }
-
-    public Mono<Boolean> setApplicationAsAgencyProfile(String applicationId, boolean agencyProfile) {
-        Application application = Application.builder()
-                .agencyProfile(agencyProfile)
-                .build();
-        return mongoUpsertHelper.updateById(application, applicationId);
-    }
+    Mono<Boolean> setApplicationAsAgencyProfile(String applicationId, boolean agencyProfile);
 
     @NonEmptyMono
     @SuppressWarnings("ReactiveStreamsNullableInLambdaInTransform")
-    public Mono<Set<String>> getPublicApplicationIds(Collection<String> applicationIds, Boolean isAnonymous, Boolean isPrivateMarketplace) {
+    Mono<Set<String>> getFilteredPublicApplicationIds(ApplicationRequestType requestType, Collection<String> applicationIds, String userId, Boolean isPrivateMarketplace);
 
-        if(isAnonymous) {
-            if(isPrivateMarketplace) {
-                return repository.findByPublicToAllIsTrueAndPublicToMarketplaceIsAndAgencyProfileIsAndIdIn(false, false, applicationIds)
-                        .map(HasIdAndAuditing::getId)
-                        .collect(Collectors.toSet());
-            } else {
-                return repository.findByPublicToAllIsTrueAndPublicToMarketplaceIsAndAgencyProfileIsAndIdIn(true, false, applicationIds)
-                        .map(HasIdAndAuditing::getId)
-                        .collect(Collectors.toSet());
-            }
-        } else {
-                return repository.findByPublicToAllIsTrueAndPublicToMarketplaceIsOrAgencyProfileIsAndIdIn(true, true, applicationIds)
-                        .map(HasIdAndAuditing::getId)
-                        .collect(Collectors.toSet());
-        }
+    @NonEmptyMono
+    @SuppressWarnings("ReactiveStreamsNullableInLambdaInTransform")
+    Mono<Set<String>> getPublicApplicationIds(Collection<String> applicationIds);
 
+    @NonEmptyMono
+    @SuppressWarnings("ReactiveStreamsNullableInLambdaInTransform")
+    Mono<Set<String>> getPrivateApplicationIds(Collection<String> applicationIds, String userId);
 
-    }
+    @NonEmptyMono
+    @SuppressWarnings("ReactiveStreamsNullableInLambdaInTransform")
+    Mono<Set<String>> getPublicMarketplaceApplicationIds(Collection<String> applicationIds, boolean isAnonymous, boolean isPrivateMarketplace);
+
+    @NonEmptyMono
+    @SuppressWarnings("ReactiveStreamsNullableInLambdaInTransform")
+    Mono<Set<String>> getPublicAgencyApplicationIds(Collection<String> applicationIds);
+
+    Flux<Application> findAll();
 }

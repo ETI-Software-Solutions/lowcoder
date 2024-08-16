@@ -38,6 +38,9 @@ import {
   TreeSelectStyleType,
   widthCalculator,
   heightCalculator,
+  
+  SelectStyle,
+  ChildrenMultiSelectStyleType,
 } from "comps/controls/styleControlConstants";
 import { stateComp, withDefault } from "../../generators";
 import {
@@ -53,9 +56,9 @@ import { RefControl } from "comps/controls/refControl";
 import { BaseSelectRef } from "rc-select";
 import { refMethods } from "comps/generators/withMethodExposing";
 import { blurMethod, focusMethod } from "comps/utils/methodUtils";
-
 import { useContext } from "react";
 import { EditorContext } from "comps/editorState";
+import { styleControl } from "comps/controls/styleControl";
 
 export const getStyle = (
   style:
@@ -76,6 +79,8 @@ export const getStyle = (
     }	
     .ant-select-selection-search-input {
       font-family:${(style as SelectStyleType).fontFamily} !important;
+      text-transform:${(style as SelectStyleType).textTransform} !important;
+      text-decoration:${(style as SelectStyleType).textDecoration} !important;
       font-size:${(style as SelectStyleType).textSize} !important;
       font-weight:${(style as SelectStyleType).textWeight};
       color:${(style as SelectStyleType).text} !important;
@@ -182,10 +187,25 @@ const Select = styled(AntdSelect) <{ $style: SelectStyleType & MultiSelectStyleT
   ${(props) => props.$style && getStyle(props.$style)}
 `;
 
-const DropdownStyled = styled.div<{ $style: MultiSelectStyleType }>`
-  ${(props) => props.$style && getDropdownStyle(props.$style)}
+const DropdownStyled = styled.div<{ $style: ChildrenMultiSelectStyleType }>`
+ background-color: ${props => props.$style?.background};
+    border: ${props => props.$style?.border};
+    border-style: ${props => props.$style?.borderStyle};
+    border-width: ${props => props.$style?.borderWidth};
+    border-radius: ${props => props.$style?.radius};
+    rotate: ${props => props.$style?.rotation};
+    margin: ${props => props.$style?.margin};
+    padding: ${props => props.$style?.padding};
   .ant-select-item-option-content {
-    ${(props) => `padding: ${props.$style.padding}`};
+    font-size: ${props => props.$style?.textSize};
+    font-style: ${props => props.$style?.fontStyle};
+    font-family: ${props => props.$style?.fontFamily};
+    font-weight: ${props => props.$style?.textWeight};
+    text-transform: ${props => props.$style?.textTransform};
+    color: ${props => props.$style?.text};
+  }
+  .option-label{
+    text-decoration: ${props => props.$style?.textDecoration} !important;
   }
   .option-label img {
     min-width: 14px;
@@ -215,6 +235,7 @@ export const SelectChildrenMap = {
   viewRef: RefControl<BaseSelectRef>,
   margin: MarginControl,
   padding: PaddingControl,
+  inputFieldStyle:styleControl(SelectStyle),
   ...SelectInputValidationChildren,
   ...formDataChildren,
 };
@@ -224,11 +245,12 @@ export const SelectUIView = (
     mode?: "multiple" | "tags";
     value: any;
     style: SelectStyleType | MultiSelectStyleType;
+    childrenInputFieldStyle: ChildrenMultiSelectStyleType;
     onChange: (value: any) => void;
     dispatch: DispatchType;
   }
-) => (
-  <Select
+) => {
+  return <Select
     ref={props.viewRef}
     mode={props.mode}
     $style={props.style as SelectStyleType & MultiSelectStyleType}
@@ -241,7 +263,7 @@ export const SelectUIView = (
       option?.label.toLowerCase().includes(input.toLowerCase())
     }
     dropdownRender={(originNode: ReactNode) => (
-      <DropdownStyled $style={props.style as MultiSelectStyleType}>
+      <DropdownStyled $style={props.childrenInputFieldStyle as ChildrenMultiSelectStyleType}>
         {originNode}
       </DropdownStyled>
     )}
@@ -268,7 +290,6 @@ export const SelectUIView = (
           label={option.label}
           disabled={option.disabled}
           key={option.value}
-          style={{fontFamily:"Montserrat"}}
         >
           <Wrapper className="option-label">
             {props.options.findIndex((option) => hasIcon(option.prefixIcon)) >
@@ -278,7 +299,7 @@ export const SelectUIView = (
         </Select.Option>
       ))}
   </Select>
-);
+}
 
 export const SelectPropertyView = (
   children: RecordConstructorToComp<
@@ -289,6 +310,9 @@ export const SelectPropertyView = (
     defaultValue: { propertyView: (params: ControlParams) => ControlNode };
     value: { propertyView: (params: ControlParams) => ControlNode };
     style: { getPropertyView: () => ControlNode };
+    labelStyle: { getPropertyView: () => ControlNode };
+    inputFieldStyle: { getPropertyView: () => ControlNode };
+    childrenInputFieldStyle: { getPropertyView: () => ControlNode };
   }
 ) => (
   <>
@@ -327,10 +351,21 @@ export const SelectPropertyView = (
     {["layout", "both"].includes(
       useContext(EditorContext).editorModeStatus
     ) && (
-      <Section name={sectionNames.style}>
-        {children.style.getPropertyView()}
-      </Section>
-    )}
+        <>
+          <Section name={sectionNames.style}>
+            {children.style.getPropertyView()}
+          </Section>
+          <Section name={sectionNames.labelStyle}>
+            {children.labelStyle.getPropertyView()}
+          </Section>
+          <Section name={sectionNames.inputFieldStyle}>
+            {children.inputFieldStyle.getPropertyView()}
+          </Section>
+          <Section name={'Children Input Field Styles'}>
+            {children.childrenInputFieldStyle.getPropertyView()}
+          </Section>
+        </>
+      )}
   </>
 );
 

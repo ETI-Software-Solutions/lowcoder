@@ -25,12 +25,13 @@ import { RefControl } from "comps/controls/refControl";
 
 import { useContext } from "react";
 import { EditorContext } from "comps/editorState";
+import { migrateOldData, withDefault } from "comps/generators/simpleGenerators";
+import { fixOldInputCompData } from "../textInputComp/textInputConstants";
+
 
 const getStyle = (style: SegmentStyleType) => {
   return css`
     &.ant-segmented:not(.ant-segmented-disabled) {
-      background-color: ${style.background};
-
       &,
       .ant-segmented-item-selected,
       .ant-segmented-thumb,
@@ -52,6 +53,14 @@ const getStyle = (style: SegmentStyleType) => {
     .ant-segmented-item-selected {
       border-radius: ${style.radius};
     }
+    &.ant-segmented, .ant-segmented-item-label {
+      font-family:${style.fontFamily};
+      font-style:${style.fontStyle};
+      font-size:${style.textSize};
+      font-weight:${style.textWeight};
+      text-transform:${style.textTransform};
+      text-decoration:${style.textDecoration};
+    }
   `;
 };
 
@@ -68,14 +77,14 @@ const SegmentChildrenMap = {
   disabled: BoolCodeControl,
   onEvent: ChangeEventHandlerControl,
   options: SelectOptionControl,
-  style: styleControl(SegmentStyle),
+  style: withDefault(styleControl(SegmentStyle),{borderWidth:'1px'}),
   viewRef: RefControl<HTMLDivElement>,
 
   ...SelectInputValidationChildren,
   ...formDataChildren,
 };
 
-const SegmentedControlBasicComp = (function () {
+let SegmentedControlBasicComp = (function () {
   return new UICompBuilder(SegmentChildrenMap, (props) => {
     const [
       validateState,
@@ -138,6 +147,8 @@ const SegmentedControlBasicComp = (function () {
     .setExposeMethodConfigs(selectDivRefMethods)
     .build();
 })();
+
+SegmentedControlBasicComp = migrateOldData(SegmentedControlBasicComp, fixOldInputCompData);
 
 export const SegmentedControlComp = withExposingConfigs(SegmentedControlBasicComp, [
   new NameConfig("value", trans("selectInput.valueDesc")),

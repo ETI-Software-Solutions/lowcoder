@@ -26,8 +26,10 @@ import { fetchFolderElements } from "redux/reduxActions/folderActions";
 import { registryDataSourcePlugin } from "constants/queryConstants";
 import { DatasourceApi } from "api/datasourceApi";
 import { useRootCompInstance } from "./useRootCompInstance";
-import ErrorBoundary from "antd/es/alert/ErrorBoundary";
 import EditorSkeletonView from "./editorSkeletonView";
+import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
+import { ALL_APPLICATIONS_URL } from "@lowcoder-ee/constants/routesURL";
+import history from "util/history";
 
 const AppSnapshot = lazy(() => {
   return import("pages/editor/appSnapshot")
@@ -95,9 +97,8 @@ export default function AppEditor() {
       dispatch(fetchQueryLibraryDropdown());
     }
   }, [dispatch, applicationId, paramViewMode]);
-
-  useEffect(() => {
-    if (!currentUser?.id) return;
+  
+  const fetchJSDataSourceByApp = () => {
     DatasourceApi.fetchJsDatasourceByApp(applicationId).then((res) => {
       res.data.data.forEach((i) => {
         registryDataSourcePlugin(i.type, i.id, i.pluginDefinition);
@@ -105,7 +106,7 @@ export default function AppEditor() {
       setIsDataSourcePluginRegistered(true);
     });
     dispatch(setShowAppSnapshot(false));
-  }, [applicationId, dispatch, currentUser]);
+  };
 
   useEffect(() => {
     if (!fetchOrgGroupsFinished) {
@@ -129,13 +130,19 @@ export default function AppEditor() {
             },
           });
           setAppInfo(info);
+          fetchJSDataSourceByApp();
         },
       })
     );
   }, [viewMode, applicationId, dispatch]);
-
+const fallbackUI = (
+  <div style={{display:'flex', height:'100%', width:'100%', alignItems:'center',justifyContent:'center', gap:'8px',marginTop:'10px'}}>
+    <p style={{margin:0}}>Something went wrong while displaying this webpage</p>
+    <button onClick={() => history.push(ALL_APPLICATIONS_URL)} style={{background: '#4965f2',border: '1px solid #4965f2', color: '#ffffff',borderRadius:'6px'}}>Go to Apps</button>
+  </div>
+);
   return (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={fallbackUI}>
       {showAppSnapshot ? (
         <Suspense fallback={<EditorSkeletonView />}>
           <AppSnapshot

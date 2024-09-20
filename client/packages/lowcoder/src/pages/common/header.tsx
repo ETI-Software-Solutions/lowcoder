@@ -342,7 +342,6 @@ export default function Header(props: HeaderProps) {
     editorState.setEditorModeStatus(value);
   };
 
-
   const headerStart = (
     <>
       <StyledLink onClick={() => history.push(ALL_APPLICATIONS_URL)}>

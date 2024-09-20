@@ -23,7 +23,7 @@ import Flex from "antd/es/flex";
 const AccountLoginWrapper = styled(FormWrapperMobile)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 0px;
+  margin-bottom: 66px;
 
   .form-input.password-input {
     margin-bottom: 0px;
@@ -62,9 +62,13 @@ export default function FormLogin(props: FormLoginProps) {
 
   return (
     <>
-      {/* <LoginCardTitle>{trans("userAuth.login")}</LoginCardTitle> */}
-      <AccountLoginWrapper>
-        <FormInput
+      <LoginCardTitle>{trans("userAuth.login")}</LoginCardTitle>
+      <AccountLoginWrapper style={(orgId || invitationId) && {
+          marginBottom: "40px",
+          marginTop: "-50px",
+      }}>
+      {!props.organizationId && (
+        <><FormInput
           className="form-input"
           label={trans("userAuth.email")}
           onChange={(value, valid) => setAccount(valid ? value : "")}
@@ -72,34 +76,21 @@ export default function FormLogin(props: FormLoginProps) {
           checkRule={{
             check: (value) => checkPhoneValid(value) || checkEmailValid(value),
             errorMsg: trans("userAuth.inputValidEmail"),
-          }}
+          }} /><PasswordInput
+            className="form-input"
+            onChange={(value) => setPassword(value)}
+            valueCheck={() => [true, ""]} /><ConfirmButton loading={loading} disabled={!account || !password} onClick={onSubmit}>
+            {trans("userAuth.login")}
+          </ConfirmButton></>
+      )}
+      
+      {props.organizationId && (
+        <ThirdPartyAuth
+          invitationId={invitationId}
+          invitedOrganizationId={props.organizationId}
+          authGoal="login"
         />
-        <PasswordInput
-          className="form-input password-input"
-          onChange={(value) => setPassword(value)}
-          valueCheck={() => [true, ""]}
-        />
-        <Flex justify="end" style={{margin: '10px 0'}}>
-          <Link to={{
-            pathname: orgId
-              ? ORG_AUTH_FORGOT_PASSWORD_URL.replace(':orgId', orgId)
-              : AUTH_FORGOT_PASSWORD_URL,
-            state: location.state
-            }}
-          >
-            {`${trans("userAuth.forgotPassword")}?`}
-          </Link>
-        </Flex>
-        <ConfirmButton loading={loading} disabled={!account || !password} onClick={onSubmit}>
-          {trans("userAuth.login")}
-        </ConfirmButton>
-        {props.organizationId && (
-          <ThirdPartyAuth
-            invitationId={invitationId}
-            invitedOrganizationId={props.organizationId}
-            authGoal="login"
-          />
-        )}
+      )}
       </AccountLoginWrapper>
       <Divider/>
       <AuthBottomView>

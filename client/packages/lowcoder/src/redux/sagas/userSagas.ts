@@ -157,6 +157,10 @@ export function* logoutSaga(action: LogoutActionType) {
       isValidResponse = validateResponse(response);
     }
     if (isValidResponse) {
+      // const orgId = action.payload?.orgId ? action.payload?.orgId : ""
+      // if (orgId) {
+      //   redirectURL = ORG_AUTH_LOGIN_URL.replace(':orgId', orgId);
+      // }
       yield put(logoutSuccess());
       localStorage.clear();
       window.location.replace(redirectURL);

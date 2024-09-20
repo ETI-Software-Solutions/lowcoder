@@ -25,6 +25,7 @@ export const PERMISSION_SETTING_DETAIL = `${PERMISSION_SETTING}/:groupId`;
 export const ORGANIZATION_SETTING_DETAIL = `${ORGANIZATION_SETTING}/:orgId`;
 export const SUBSCRIPTION_DETAIL = `${SUBSCRIPTION_SETTING}/:subscriptionId`;
 
+export const ETISOFTWARE_LAUNCHPAD_URL = "/launchpad";
 export const ALL_APPLICATIONS_URL = "/apps";
 export const ADMIN_APP_URL = "/ee/:applicationId/:viewMode";
 export const APPLICATION_MARKETPLACE_URL = `https://app.lowcoder.cloud/apps`;

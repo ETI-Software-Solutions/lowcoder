@@ -23,7 +23,6 @@ import Flex from "antd/es/flex";
 const AccountLoginWrapper = styled(FormWrapperMobile)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 66px;
 
   .form-input.password-input {
     margin-bottom: 0px;
@@ -62,11 +61,7 @@ export default function FormLogin(props: FormLoginProps) {
 
   return (
     <>
-      <LoginCardTitle>{trans("userAuth.login")}</LoginCardTitle>
-      <AccountLoginWrapper style={(orgId || invitationId) && {
-          marginBottom: "40px",
-          marginTop: "-50px",
-      }}>
+      <AccountLoginWrapper>
       {!props.organizationId && (
         <><FormInput
           className="form-input"

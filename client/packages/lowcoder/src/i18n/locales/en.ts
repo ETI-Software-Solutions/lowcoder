@@ -2936,7 +2936,7 @@ export const en = {
     "resetSuccessDesc": "Password Reset Succeeded. The New Password is: {password}",
     "resetLostPasswordSuccess": "Password Reset Succeeded. Please login again.",
     "copyPassword": "Copy Password",
-    "poweredByLowcoder": "Powered by: Lowcoder.cloud"
+    "poweredByLowcoder": ""
   },
   "preLoad": {
     "jsLibraryHelpText": "Add JavaScript Libraries to Your Current Application via URL Addresses. lodash, day.js, uuid, numbro are Built into the System for Immediate Use. JavaScript Libraries are Loaded Before the Application is Initialized, Which Can Have an Impact on Application Performance.",

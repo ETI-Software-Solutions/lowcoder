@@ -4,9 +4,10 @@ import org.lowcoder.plugin.sql.GeneralSqlExecutor;
 import org.lowcoder.plugin.sql.SqlBasedQueryExecutor;
 import org.lowcoder.sdk.exception.PluginException;
 import org.lowcoder.sdk.models.DatasourceStructure;
+import org.lowcoder.sdk.models.DatasourceStructure.Table;
 import org.lowcoder.sdk.plugin.common.sql.SqlBasedDatasourceConnectionConfig;
 import org.lowcoder.sdk.plugin.sqlcommand.GuiSqlCommand;
-import org.lowcoder.sdk.plugin.sqlcommand.command.mysql.*;
+import org.lowcoder.sdk.plugin.sqlcommand.command.informix.*;
 import lombok.extern.slf4j.Slf4j;
 import org.pf4j.Extension;
 
@@ -36,7 +37,7 @@ public class InformixQueryExecutor extends SqlBasedQueryExecutor {
     @Override
     protected DatasourceStructure getDatabaseMetadata(Connection connection,
             SqlBasedDatasourceConnectionConfig connectionConfig) {
-        Map<String, DatasourceStructure.Table> tablesByName = new LinkedHashMap<>();
+        Map<String, Table> tablesByName = new LinkedHashMap<>();
         try (Statement statement = connection.createStatement()) {
             parseTableAndColumns(tablesByName, statement);
             parseTableKeys(tablesByName, statement);
@@ -46,7 +47,7 @@ public class InformixQueryExecutor extends SqlBasedQueryExecutor {
         }
 
         DatasourceStructure structure = new DatasourceStructure(new ArrayList<>(tablesByName.values()));
-        for (DatasourceStructure.Table table : structure.getTables()) {
+        for (Table table : structure.getTables()) {
             table.getKeys().sort(Comparator.naturalOrder());
         }
         return structure;
@@ -55,12 +56,12 @@ public class InformixQueryExecutor extends SqlBasedQueryExecutor {
     @Override
     protected GuiSqlCommand parseSqlCommand(String guiStatementType, Map<String, Object> detail) {
         return switch (guiStatementType.toUpperCase()) {
-            case "INSERT" -> MysqlInsertCommand.from(detail);
-            case "UPDATE" -> MysqlUpdateCommand.from(detail);
-            case "UPSERT" -> MysqlUpsertCommand.from(detail);
-            case "DELETE" -> MysqlDeleteCommand.from(detail);
-            case "BULK_INSERT" -> MysqlBulkInsertCommand.from(detail);
-            case "BULK_UPDATE" -> MysqlBulkUpdateCommand.from(detail);
+            case "INSERT" -> InformixInsertCommand.from(detail);
+            case "UPDATE" -> InformixUpdateCommand.from(detail);
+            case "UPSERT" -> InformixUpsertCommand.from(detail);
+            case "DELETE" -> InformixDeleteCommand.from(detail);
+            case "BULK_INSERT" -> InformixBulkInsertCommand.from(detail);
+            case "BULK_UPDATE" -> InformixBulkUpdateCommand.from(detail);
             default -> throw new PluginException(QUERY_ARGUMENT_ERROR, "INVALID_GUI_COMMAND_TYPE", guiStatementType);
         };
     }

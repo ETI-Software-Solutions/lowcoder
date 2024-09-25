@@ -33,7 +33,6 @@ const StyledPasswordInput = styled(PasswordInput)`
 const RegisterContent = styled(FormWrapperMobile)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 66px;
 `;
 
 function UserRegister() {
@@ -80,11 +79,7 @@ function UserRegister() {
       subHeading={registerSubHeading}
       type="large"
     >
-      <LoginCardTitle>{trans("userAuth.registerByEmail")}</LoginCardTitle>
-      <RegisterContent style={organizationId && {
-          marginBottom: "40px",
-          marginTop: "-50px",
-      }}>
+      <RegisterContent>
       {!organizationId && (
         <><StyledFormInput
           className="form-input"

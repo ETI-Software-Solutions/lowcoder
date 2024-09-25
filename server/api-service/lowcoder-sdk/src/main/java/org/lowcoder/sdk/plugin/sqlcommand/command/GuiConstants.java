@@ -7,5 +7,5 @@ public final class GuiConstants {
 
     public static final String POSTGRES_COLUMN_DELIMITER = "\"";
     public static final String MYSQL_COLUMN_DELIMITER = "`";
-
+    public static final String INFORMIX_COLUMN_DELIMITER = "";
 }

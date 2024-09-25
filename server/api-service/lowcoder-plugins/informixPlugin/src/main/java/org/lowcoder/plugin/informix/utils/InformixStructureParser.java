@@ -19,8 +19,7 @@ public class InformixStructureParser {
     /**
      * Example output for COLUMNS_QUERY:
      * +------------+-----------+-------------+-------------+-------------+------------+----------------+
-     * | table_name | column_id | column_name | column_type | is_nullable |
-     * COLUMN_KEY | EXTRA |
+     * | table_name | column_id | column_name | column_type | is_nullable | COLUMN_KEY | EXTRA |
      * +------------+-----------+-------------+-------------+-------------+------------+----------------+
      * | test | 1 | id | int | 0 | PRI | auto_increment |
      * | test | 2 | firstname | varchar | 1 | | |
@@ -29,25 +28,104 @@ public class InformixStructureParser {
      * +------------+-----------+-------------+-------------+-------------+------------+----------------+
      */
     public static final String COLUMNS_QUERY = """
-            select tab.table_name as table_name,
-                   col.ordinal_position as column_id,
-                   col.column_name as column_name,
-                   col.data_type as column_type,
-                   col.is_nullable = 'YES' as is_nullable,
-                   col.column_key,
-                   col.extra
-            from information_schema.tables as tab
-                     inner join information_schema.columns as col
-                                on col.table_schema = tab.table_schema
-                                    and col.table_name = tab.table_name
-            where tab.table_type = 'BASE TABLE'
-              and tab.table_schema = database()
-            order by tab.table_name,
-                     col.ordinal_position;
-                     """;
+            SELECT tab.tabname AS table_name,
+            	col.colno AS column_id,
+            	col.colname AS column_name,
+            	CASE
+            	WHEN (col.coltype = 0 OR col.coltype = 256) THEN 'CHAR'
+            	WHEN (col.coltype = 1 OR col.coltype = 257) THEN 'SMALLINT'
+            	WHEN (col.coltype = 2 OR col.coltype = 258) THEN 'INTEGER'
+            	WHEN (col.coltype = 3 OR col.coltype = 259) THEN 'FLOAT'
+            	WHEN (col.coltype = 4 OR col.coltype = 260) THEN 'SMALLFLOAT'
+            	WHEN (col.coltype = 5 OR col.coltype = 261) THEN 'DECIMAL'
+            	WHEN (col.coltype = 6 OR col.coltype = 262) THEN 'SERIAL'
+            	WHEN (col.coltype = 7 OR col.coltype = 263) THEN 'DATE'
+            	WHEN (col.coltype = 8 OR col.coltype = 264) THEN 'MONEY'
+            	WHEN (col.coltype = 10 OR col.coltype = 266) THEN 'DATETIME'\s
+            	WHEN (col.coltype = 11 OR col.coltype = 267) THEN 'BYTE'
+            	WHEN (col.coltype = 12 OR col.coltype = 268) THEN 'TEXT'
+            	WHEN (col.coltype = 13 OR col.coltype = 269) THEN 'VARCHAR'
+            	WHEN (col.coltype = 14 OR col.coltype = 270) THEN 'INTERVAL'
+            	WHEN (col.coltype = 15 OR col.coltype = 271) THEN 'NCHAR'
+            	WHEN (col.coltype = 16 OR col.coltype = 272) THEN 'NVARCHAR'
+            	WHEN (col.coltype = 17 OR col.coltype = 273) THEN 'INT8'
+            	WHEN (col.coltype = 40 OR col.coltype = 296) THEN 'JSON'
+            	WHEN (col.coltype = 41 OR col.coltype = 297) THEN 'BOOLEAN'
+            	WHEN (col.coltype = 52 OR col.coltype = 308) THEN 'BIGINT'
+            	ELSE 'UNKNOWN'
+            	END AS column_type,
+            	(CASE WHEN col.coltype > 255 THEN 1 ELSE 0 END) AS is_nullable,
+            	CASE
+            		WHEN col.colname IN
+            		(
+            			SELECT UNIQUE
+            				(SELECT c.colname FROM syscolumns c WHERE c.tabid = i.tabid AND c.colno = i.part1)
+            				FROM sysindexes i, systables t
+            					WHERE i.tabid = t.tabid
+            					AND t.tabname = tab.tabname
+            					AND idxname IN
+            			(
+            				SELECT c.idxname AS pk_idx
+            				FROM sysconstraints c, systables t,
+            				OUTER (sysreferences r, systables t2, sysconstraints c2)
+            				WHERE t.tabname = tab.tabname
+            				AND t.tabid = c.tabid
+            				AND r.constrid = c.constrid
+            				AND t2.tabid = r.ptabid
+            				AND c2.constrid = r.constrid
+            				AND c.constrtype = 'P'
+            			)
+            			) THEN 'PRI'
+            			WHEN col.colname IN
+            			(
+            			SELECT UNIQUE
+            				(SELECT c.colname FROM syscolumns c WHERE c.tabid = i.tabid AND c.colno = i.part2)
+            				FROM sysindexes i, systables t
+            					WHERE i.tabid = t.tabid
+            					AND t.tabname = tab.tabname
+            					AND idxname IN
+            			(
+            				SELECT c.idxname AS pk_idx
+            				FROM sysconstraints c, systables t,
+            				OUTER (sysreferences r, systables t2, sysconstraints c2)
+            				WHERE t.tabname = tab.tabname
+            				AND t.tabid = c.tabid
+            				AND r.constrid = c.constrid
+            				AND t2.tabid = r.ptabid
+            				AND c2.constrid = r.constrid
+            				AND c.constrtype = 'P'
+            			)
+            			) THEN 'PRI'
+            			WHEN col.colname IN
+            			(
+            			SELECT UNIQUE
+            				(SELECT c.colname FROM syscolumns c WHERE c.tabid = i.tabid AND c.colno = i.part3)
+            				FROM sysindexes i, systables t
+            					WHERE i.tabid = t.tabid
+            					AND t.tabname = tab.tabname
+            					AND idxname IN
+            			(
+            				SELECT c.idxname AS pk_idx
+            				FROM sysconstraints c, systables t,
+            				OUTER (sysreferences r, systables t2, sysconstraints c2)
+            				WHERE t.tabname = tab.tabname
+            				AND t.tabid = c.tabid
+            				AND r.constrid = c.constrid
+            				AND t2.tabid = r.ptabid
+            				AND c2.constrid = r.constrid
+            				AND c.constrtype = 'P'
+            			)
+            			) THEN 'PRI'
+            			ELSE ''
+                END AS column_key,
+                '' AS extra
+            FROM systables tab
+            JOIN syscolumns col ON tab.tabid = col.tabid
+            WHERE tab.tabtype = 'T'  -- 'T' denotes base tables in Informix
+            ORDER BY tab.tabname,
+                     col.colno;
+            """;
 
-    // " and i.enforced = 'YES'\n" + // Looks like this is not available on all
-    // versions of MySQL.
     /**
      * Example output for KEYS_QUERY:
      * +-----------------+-------------+------------+-----------------+-------------+----------------+---------------+----------------+
@@ -58,21 +136,28 @@ public class InformixStructureParser {
      * +-----------------+-------------+------------+-----------------+-------------+----------------+---------------+----------------+
      */
     public static final String KEYS_QUERY = """
-            select i.constraint_name,
-                   i.TABLE_SCHEMA as self_schema,
-                   i.table_name as self_table,
-                   if(i.constraint_type = 'FOREIGN KEY', 'f', 'p') as constraint_type,
-                   k.column_name as self_column, -- k.ordinal_position, k.position_in_unique_constraint,
-                   k.referenced_table_schema as foreign_schema,
-                   k.referenced_table_name as foreign_table,
-                   k.referenced_column_name as foreign_column
-            from information_schema.table_constraints i
-                     left join information_schema.key_column_usage k
-                         on i.constraint_name = k.constraint_name and i.table_name = k.table_name
-            where i.table_schema = database()
-              and k.constraint_schema = database()
-              and i.constraint_type in ('FOREIGN KEY', 'PRIMARY KEY')
-            order by i.table_name, i.constraint_name, k.position_in_unique_constraint;
+            SELECT c.constrname AS constraint_name,
+                   t.owner AS self_schema,
+                   t.tabname AS self_table,
+                   CASE
+                       WHEN c.constrtype = 'R' THEN 'f'
+                       WHEN c.constrtype = 'P' THEN 'p'
+                       ELSE c.constrtype
+                   END AS constraint_type,
+                   col.colname AS self_column,
+                   fk_tab.owner AS foreign_schema,
+                   fk_tab.tabname AS foreign_table,
+                   fk_col.colname AS foreign_column
+            FROM sysconstraints c
+            JOIN systables t ON c.tabid = t.tabid
+            JOIN sysindexes i ON c.idxname = i.idxname
+            JOIN syscolumns col ON col.tabid = t.tabid AND col.colno = i.part1
+            LEFT JOIN sysreferences r ON c.constrid = r.constrid
+            LEFT JOIN systables fk_tab ON r.ptabid = fk_tab.tabid
+            LEFT JOIN syscolumns fk_col ON fk_col.tabid = fk_tab.tabid AND fk_col.colno = i.part1
+            WHERE t.owner = USER
+              AND (c.constrtype IN ('P', 'R'))
+            ORDER BY t.tabname, c.constrname, col.colno;
             """;
 
     public static void parseTableKeys(Map<String, DatasourceStructure.Table> tablesByName, Statement statement)

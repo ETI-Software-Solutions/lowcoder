@@ -150,7 +150,7 @@ export default function ProfileDropdown(props: DropDownProps) {
       dispatch(profileSettingModalVisible(true));
     } else if (e.key === "logout") {
       // logout
-      dispatch(logoutAction({ orgId: currentOrgId }));
+      dispatch(logoutAction({ organizationId: currentOrgId }));
     } else if (e.keyPath.includes("switchOrg")) {
       if (e.key === "newOrganization") {
         // create new organization

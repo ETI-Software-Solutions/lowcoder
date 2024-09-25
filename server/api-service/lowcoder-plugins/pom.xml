@@ -162,6 +162,11 @@
 				<artifactId>snowflakePlugin</artifactId>
 				<version>${revision}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.lowcoder</groupId>
+				<artifactId>informixPlugin</artifactId>
+				<version>${revision}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
     

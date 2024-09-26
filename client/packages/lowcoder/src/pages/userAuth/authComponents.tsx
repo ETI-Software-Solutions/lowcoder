@@ -140,10 +140,11 @@ export const AuthContainer = (props: {
   children: any;
   heading?: string;
   subHeading?: string;
-  type?: string
+  type?: string,
+  hidden?: boolean,
 }) => {
   return (
-    <AuthCardContainer>
+    <AuthCardContainer hidden={ props.hidden || false }>
       <AuthCardHeading
         $type={props.type}
       >

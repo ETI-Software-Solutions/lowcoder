@@ -88,6 +88,7 @@ function Login() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const orgId = useParams<any>().orgId;
+  const realm = queryParams.get("realm");
 
   const loginType = systemConfig?.authConfigs.find(
     (config) => config.sourceType === queryParams.get(AuthSearchParams.loginType)
@@ -142,6 +143,7 @@ function Login() {
       <AuthContainer
         heading={loginHeading}
         subHeading={loginSubHeading}
+        hidden={!!organizationId && !!realm}
       >
         <FormLogin organizationId={organizationId} />
       </AuthContainer>

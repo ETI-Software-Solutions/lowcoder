@@ -9,7 +9,7 @@ import history from "util/history";
 import { LoginLogoStyle, LoginLabelStyle, StyledLoginButton } from "pages/userAuth/authComponents";
 import { useSelector } from "react-redux";
 import { selectSystemConfig } from "redux/selectors/configSelectors";
-import React from "react";
+import React, { useEffect } from "react";
 import { messageInstance } from "lowcoder-design/src/components/GlobalInstances";
 import styled from "styled-components";
 import { trans } from "i18n";
@@ -39,6 +39,9 @@ function ThirdPartyLoginButton(props: {
 }) {
   const { config, label, loginRedirectUrl } = props;
   const redirectUrl = getRedirectUrl(config.authType);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const realm = queryParams.get("realm");
   const onLoginClick = () => {
     const state = geneAuthStateAndSaveParam(
       props.authGoal,
@@ -77,6 +80,14 @@ function ThirdPartyLoginButton(props: {
       window.location.href = getAuthUrl(config, redirectUrl, state);
     }
   };
+
+  useEffect(() => {
+    if(realm) {
+      if(config.url.includes(realm)) {
+        onLoginClick()
+      }
+    }
+  }, [])
 
   if (props.autoJump) {
     onLoginClick();

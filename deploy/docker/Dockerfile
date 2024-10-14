@@ -167,16 +167,15 @@ COPY --chown=lowcoder:lowcoder --from=build-client /lowcoder-client/packages/low
 # Copy additional nginx init scripts
 COPY deploy/docker/frontend/00-change-nginx-user.sh /docker-entrypoint.d/00-change-nginx-user.sh
 COPY deploy/docker/frontend/01-update-nginx-conf.sh /docker-entrypoint.d/01-update-nginx-conf.sh
+COPY deploy/docker/frontend/02-runtime-config.sh /docker-entrypoint.d/02-runtime-config.sh
 
-RUN chmod +x /docker-entrypoint.d/00-change-nginx-user.sh && \
-    chmod +x /docker-entrypoint.d/01-update-nginx-conf.sh
+RUN chmod +x /docker-entrypoint.d/*.sh
 
 COPY deploy/docker/frontend/server.conf /etc/nginx/server.conf
 COPY deploy/docker/frontend/nginx-http.conf /etc/nginx/nginx-http.conf
 COPY deploy/docker/frontend/nginx-https.conf /etc/nginx/nginx-https.conf
 COPY deploy/docker/frontend/ssl-certificate.conf /etc/nginx/ssl-certificate.conf
 COPY deploy/docker/frontend/ssl-params.conf /etc/nginx/ssl-params.conf
-
 
 EXPOSE 3000
 EXPOSE 3443

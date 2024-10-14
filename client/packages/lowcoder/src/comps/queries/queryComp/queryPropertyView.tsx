@@ -94,8 +94,8 @@ export function QueryPropertyView(props: { comp: InstanceType<typeof QueryComp> 
                 <QuerySectionWrapper>
                   {children.timeout.propertyView({
                     label: trans("query.timeout"),
-                    placeholder: "10s",
-                    tooltip: trans("query.timeoutTooltip", { maxSeconds: 3600, defaultSeconds: 10 }),
+                    placeholder: `${window.LOWCODER_DEFAULT_QUERY_TIMEOUT}s`,
+                    tooltip: trans("query.timeoutTooltip", { maxSeconds: 3600, defaultSeconds: window.LOWCODER_DEFAULT_QUERY_TIMEOUT }),
                     placement: "bottom",
                   })}
                 </QuerySectionWrapper>

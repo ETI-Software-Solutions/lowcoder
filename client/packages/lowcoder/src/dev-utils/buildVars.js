@@ -55,4 +55,8 @@ export const buildVars = [
     name: "REACT_APP_DISABLE_JS_SANDBOX",
     defaultValue: "",
   },
+  {
+    name: "LOWCODER_DEFAULT_QUERY_TIMEOUT",
+    defaultValue: 10
+  }
 ];

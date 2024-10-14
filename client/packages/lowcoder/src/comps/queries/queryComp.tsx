@@ -135,7 +135,7 @@ const childrenMap = {
   timeout: paramsMillisecondsControl({
     left: 0,
     right: 3200 * 1000,
-    defaultValue: 10 * 1000,
+    defaultValue: window.LOWCODER_DEFAULT_QUERY_TIMEOUT * 1000,
   }),
   confirmationModal: QueryConfirmationModal,
   periodic: BoolPureControl,

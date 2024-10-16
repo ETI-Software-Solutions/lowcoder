@@ -51,6 +51,7 @@ $ helm delete -n lowcoder my-lowcoder
 | `global.config.encryption.salt`         | Encryption salt      - CHANGE IT!                                                 | `lowcoder.org` |
 | `global.config.apiKeySecret`            | API-KEY secret, should be a string of at least 32 random characters - CHANGE IT   | `5a41b090758b39b226603177ef48d73ae9839dd458ccb7e66f7e7cc028d5a50b` |
 | `global.config.maxQueryTimeout`         | Maximum query timeout in seconds                                                  | `120`          |
+| `global.config.defaultQueryTimeout`     | Default query timeout in seconds                                                  | `10`           |
 | `global.config.maxRequestSize`          | Maximum request size                                                              | `20m`          |
 | `global.config.nodeServiceUrl`          | URL to node-service server if using external one (disabled by default)            |                |
 | `global.config.apiServiceUrl`           | URL to api-service server if using external one (disabled by default)             |                |

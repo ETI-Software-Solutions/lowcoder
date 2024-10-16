@@ -25,4 +25,5 @@ data:
   {{- end }}
   LOWCODER_MAX_REQUEST_SIZE: {{ .Values.global.config.maxRequestSize | default "20m" | quote }}
   LOWCODER_MAX_QUERY_TIMEOUT: {{ .Values.global.config.maxQueryTimeout | default "120" | quote }}
+  LOWCODER_DEFAULT_QUERY_TIMEOUT: {{ .Values.global.config.defaultQueryTimeout | default "10" | quote }}
 

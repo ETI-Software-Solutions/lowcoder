@@ -39,6 +39,7 @@ data:
   LOWCODER_EMAIL_AUTH_ENABLED: {{ .Values.global.config.enableEmailAuth | default "true" | quote }}
   LOWCODER_EMAIL_SIGNUP_ENABLED: {{ .Values.global.config.enableUserSignUp | default "true" | quote }}
   LOWCODER_MAX_QUERY_TIMEOUT: {{ .Values.global.config.maxQueryTimeout | default "120" | quote }}
+  LOWCODER_DEFAULT_QUERY_TIMEOUT: {{ .Values.global.config.defaultQueryTimeout | default "10" | quote }}
   LOWCODER_MAX_ORGS_PER_USER: {{ .Values.global.defaults.maxOrgsPerUser | default "100" | quote }}
   LOWCODER_MAX_MEMBERS_PER_ORG: {{ .Values.global.defaults.maxMembersPerOrg | default "1000" | quote }}
   LOWCODER_MAX_GROUPS_PER_ORG: {{ .Values.global.defaults.maxGroupsPerOrg | default "100" | quote }}

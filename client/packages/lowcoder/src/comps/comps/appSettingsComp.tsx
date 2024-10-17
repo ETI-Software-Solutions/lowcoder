@@ -21,6 +21,7 @@ import { ApplicationCategoriesEnum } from "constants/applicationConstants";
 import { BoolControl } from "../controls/boolControl";
 import { getNpmPackageMeta } from "../utils/remote";
 import { getPromiseAfterDispatch } from "@lowcoder-ee/util/promiseUtils";
+import type { AppState } from "@lowcoder-ee/redux/reducers";
 
 const TITLE = trans("appSetting.title");
 const USER_DEFINE = "__USER_DEFINE";
@@ -111,10 +112,6 @@ const DivStyled = styled.div`
     > div:first-child {
       margin-bottom: 6px;
     }
-    
-    .tooltipLabel {
-      white-space: nowrap;
-    }
 
   }
   // custom styles for icon selector
@@ -199,6 +196,7 @@ type ChildrenInstance = RecordConstructorToComp<typeof childrenMap> & {
 };
 
 function AppSettingsModal(props: ChildrenInstance) {
+  const lowcoderCompsMeta = useSelector((state: AppState) => state.npmPlugin.packageMeta['lowcoder-comps']);
   const [lowcoderCompVersions, setLowcoderCompVersions] = useState(['latest']);
   const {
     themeList,
@@ -213,7 +211,7 @@ function AppSettingsModal(props: ChildrenInstance) {
     preventAppStylesOverwriting,
     lowcoderCompVersion,
   } = props;
-  
+
   const THEME_OPTIONS = themeList?.map((theme) => ({
     label: theme.name,
     value: theme.id + "",
@@ -234,14 +232,11 @@ function AppSettingsModal(props: ChildrenInstance) {
   }, [themeWithDefault]);
   
   useEffect(() => {
-    const fetchCompsPackageMeta = async () => {
-      const packageMeta = await getNpmPackageMeta('lowcoder-comps');
-      if (packageMeta?.versions) {
-        setLowcoderCompVersions(Object.keys(packageMeta.versions).reverse())
-      }
-    }
-    fetchCompsPackageMeta();
-  }, [])
+    setLowcoderCompVersions([
+      'latest',
+      ...Object.keys(lowcoderCompsMeta?.versions || []).reverse()
+    ])
+  }, [lowcoderCompsMeta])
 
 
   const DropdownItem = (params: { value: string }) => {

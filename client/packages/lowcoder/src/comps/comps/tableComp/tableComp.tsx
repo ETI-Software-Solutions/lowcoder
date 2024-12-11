@@ -633,6 +633,18 @@ TableTmpComp = withMethodExposing(TableTmpComp, [
   },
   {
     method: {
+      name: "setSelections",
+      description: "",
+      params: [
+        { name: "rowIds", type: "JSON" }
+      ],
+    },
+    execute: (comp, values) => {
+      comp.children.selection.children.selectedRowKeys.dispatchChangeValueAction(values[0] as string []);
+    }
+  },
+  {
+    method: {
       name: "resetSelections",
       description: "",
       params: [],

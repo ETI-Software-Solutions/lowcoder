@@ -87,7 +87,7 @@ function Login() {
   const invitationId = inviteInfo?.invitationId;
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const orgId = useParams<any>().orgId;
+  const { orgId } = useParams<{orgId?: string}>();
   const realm = queryParams.get("realm");
 
   const loginType = systemConfig?.authConfigs.find(

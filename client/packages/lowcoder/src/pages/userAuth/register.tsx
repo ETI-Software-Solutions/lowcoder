@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useState, useMemo, useEffect } from "react";
 import {
   AuthContainer,
   ConfirmButton,
@@ -7,7 +7,7 @@ import {
   StyledRouteLinkLogin,
   TermsAndPrivacyInfo,
 } from "pages/userAuth/authComponents";
-import { FormInput, PasswordInput } from "lowcoder-design";
+import { FormInput, messageInstance, PasswordInput } from "lowcoder-design";
 import { AUTH_LOGIN_URL, ORG_AUTH_LOGIN_URL } from "constants/routesURL";
 import UserApi from "api/userApi";
 import { useRedirectUrl } from "util/hooks";
@@ -21,6 +21,13 @@ import { AuthContext, checkPassWithMsg, useAuthSubmit } from "pages/userAuth/aut
 import { ThirdPartyAuth } from "pages/userAuth/thirdParty/thirdPartyAuth";
 import { useParams } from "react-router-dom";
 import { Divider } from "antd";
+import { OrgApi } from "@lowcoder-ee/api/orgApi";
+import { validateResponse } from "@lowcoder-ee/api/apiUtils";
+import history from "util/history";
+import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
+import Spin from "antd/es/spin";
+import { useSelector } from "react-redux";
+import { getServerSettings } from "@lowcoder-ee/redux/selectors/applicationSelector";
 
 const StyledFormInput = styled(FormInput)`
   margin-bottom: 16px;
@@ -36,11 +43,16 @@ const RegisterContent = styled(FormWrapperMobile)`
 `;
 
 function UserRegister() {
-  const [submitBtnDisable, setSubmitBtnDisable] = useState(false);
-  const [account, setAccount] = useState("");
-  const [password, setPassword] = useState("");
-  const redirectUrl = useRedirectUrl();
   const location = useLocation();
+  const [submitBtnDisable, setSubmitBtnDisable] = useState(false);
+  const [account, setAccount] = useState(() => {
+    const { email } = (location.state || {}) as any;
+    return email ?? '';
+  });
+  const [password, setPassword] = useState("");
+  const [orgLoading, setOrgLoading] = useState(false);
+  const [lastEmailChecked, setLastEmailChecked] = useState("");
+  const redirectUrl = useRedirectUrl();
   const { systemConfig, inviteInfo, fetchUserAfterAuthSuccess } = useContext(AuthContext);
   const invitationId = inviteInfo?.invitationId;
 
@@ -54,6 +66,21 @@ function UserRegister() {
 
   const authId = systemConfig?.form.id;
 
+  const serverSettings = useSelector(getServerSettings);
+
+  useEffect(() => {
+    const { LOWCODER_EMAIL_SIGNUP_ENABLED } = serverSettings;
+    if(
+      serverSettings.hasOwnProperty('LOWCODER_EMAIL_SIGNUP_ENABLED')
+      && LOWCODER_EMAIL_SIGNUP_ENABLED === 'false'
+    ) {
+      history.push(
+        AUTH_LOGIN_URL,
+        {...location.state || {}, email: account},
+      )
+    };
+  }, [serverSettings]);
+  
   const { loading, onSubmit } = useAuthSubmit(
     () =>
       UserApi.formLogin({
@@ -69,6 +96,29 @@ function UserRegister() {
     redirectUrl,
     fetchUserAfterAuthSuccess,
   );
+
+  const checkEmailExist = () => {
+    if (!Boolean(account.length) || lastEmailChecked === account) return;
+
+    setOrgLoading(true);
+    OrgApi.fetchOrgsByEmail(account)
+      .then((resp) => {
+        if (validateResponse(resp)) {
+          const orgList = resp.data.data;
+          if (orgList.length) {
+            messageInstance.error('Email is already registered');
+            history.push(
+              AUTH_LOGIN_URL,
+              {...location.state || {}, email: account},
+            )
+          }
+        }
+      })
+      .finally(() => {
+        setLastEmailChecked(account)
+        setOrgLoading(false);
+      });
+  }
 
   const registerHeading = trans("userAuth.register")
   const registerSubHeading = trans("userAuth.poweredByLowcoder");

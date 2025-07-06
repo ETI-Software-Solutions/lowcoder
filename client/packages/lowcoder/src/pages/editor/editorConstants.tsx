@@ -103,6 +103,7 @@ import {
   TurnstileCaptchaCompIconSmall,
   PivotTableCompIconSmall,
   GraphChartCompIconSmall,
+  CodeEditorCompIconSmall,
 } from "lowcoder-design";
 
 export const CompStateIcon: {
@@ -162,6 +163,7 @@ export const CompStateIcon: {
   rangeSlider: <RangeSliderCompIconSmall />,
   rating: <RatingCompIconSmall />,
   responsiveLayout: <ResponsiveLayoutCompIconSmall />,
+  codeEditor: <CodeEditorCompIconSmall/>,
   richTextEditor: <RichTextEditorCompIconSmall />,
   scanner: <ScannerCompIconSmall />,
   segmentedControl: <SegmentedCompIconSmall />,

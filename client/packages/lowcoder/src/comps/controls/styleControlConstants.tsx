@@ -1325,9 +1325,13 @@ export const SignatureContainerStyle = [
   getBackground(),
   getStaticBorder(),
   ...STYLING_FIELDS_CONTAINER_SEQUENCE.filter(
-    (style) => ['border'].includes(style.name) === false&&style.name!=='rotation'
+    (style) => ['border'].includes(style.name) === false && style.name !== 'rotation'
   ),
   // ...STYLING_FIELDS_CONTAINER_SEQUENCE,
+] as const;
+
+export const CodeEditorContainerStyle = [
+  getStaticBorder(),
 ] as const;
 
 export const RatingStyle = [

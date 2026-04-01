@@ -910,6 +910,21 @@ export var uiCompMap: Registry = {
       h: 50,
     },
   },
+   maplibre: {
+    name: trans("uiComp.maplibreCompName"),
+    enName: "MapLibre",
+    categories: ["dashboards"],
+    description: trans("uiComp.maplibreCompDesc"),
+    icon: GeoMapChartsCompIcon,
+    keywords: trans("uiComp.maplibreCompKeywords"),
+    lazyLoad: true,
+    compName: "MaplibreComp",
+    compPath: "comps/maplibreComp/maplibreComp",
+    layoutInfo: {
+      w: 12,
+      h: 50,
+    }
+  },
   codeEditor: {
     name: trans("uiComp.codeEditorCompName"),
     enName: "Code Editor",

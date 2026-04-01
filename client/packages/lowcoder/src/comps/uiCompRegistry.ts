@@ -68,6 +68,7 @@ export type UICompType =
   | "imageEditor"
   | "calendar"
   | "password"
+  | "maplibre"
   | "codeEditor"
   | "richTextEditor"
   | "numberInput"

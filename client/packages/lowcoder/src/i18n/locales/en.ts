@@ -51,6 +51,37 @@ export const en = {
     "recoverFailed": "Recovery Failed",
     "needUpdate": "Your current version is outdated. Please upgrade to the latest version."
   },
+  "maplibre": {
+    "properties": {
+      "data": "GeoJSON data used to render features on the map.",
+      "mapStyle": "Defines the visual style of the map.",
+      "boundaries": "Geographic bounds that restrict the visible map area.",
+      "center": "Initial center coordinates of the map (longitude, latitude).",
+      "zoom": "Initial zoom level of the map.",
+      "bearing": "Rotation angle of the map in degrees.",
+      "pitch": "Tilt angle of the map camera in degrees.",
+      "hidePopup": "Controls whether the feature info popup is disabled.",
+      "popupDataState": "Defines how popup data is managed and displayed."
+    },
+    "methods": {
+      "setBoundaries": "Update the map boundaries to restrict the visible area.",
+      "setCenter": "Set the map center coordinates.",
+      "setBearing": "Adjust the map rotation angle.",
+      "setPitch": "Adjust the map tilt angle.",
+      "setGeoJSON": "Load and render new GeoJSON data on the map.",
+      "setMapStyle": "Change the map's visual style.",
+      "hidePopup": "Hide the currently visible popup.",
+      "showPopup": "Display a popup for a selected feature."
+    },
+    "tooltips": {
+      "boundaries": "Defines the geographic limits within which the map can be moved.",
+      "center": "Sets the starting position of the map (longitude, latitude).",
+      "zoom": "Controls how close or far the map is zoomed in.",
+      "bearing": "Rotates the map clockwise in degrees.",
+      "pitch": "Tilts the map for a 3D perspective view.",
+      "hidePopup": "When enabled the info popup will not appear on point click."
+    }
+  },
   "codeEditor": {
     "notSupportAutoFormat": "The current code editor does not support auto-formatting.",
     "fold": "Fold",
@@ -999,6 +1030,10 @@ export const en = {
     "passwordCompName": "Password",
     "passwordCompDesc": "A secure field for password input, masking the characters for privacy.",
     "passwordCompKeywords": "password, security, input, hidden",
+
+    "maplibreCompName": "MapLibre",
+    "maplibreCompDesc": "An interactive map component powered by MapLibre, supporting custom styles, vector tiles, markers, and geospatial visualizations.",
+    "maplibreCompKeywords": "map, maps, geospatial, maplibre, tiles, navigation, location",
 
     "codeEditorCompName": "Code Editor",
     "codeEditorCompDesc": "A feature-rich code editor component, offering multi-language support, syntax highlighting, and built-in validation.",

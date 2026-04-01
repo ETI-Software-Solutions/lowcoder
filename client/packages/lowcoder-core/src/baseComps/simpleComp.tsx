@@ -13,9 +13,9 @@ export abstract class SimpleAbstractComp<ViewReturn extends JSONValue> extends A
   Node<ViewReturn>
 > {
   value: ViewReturn;
-  constructor(params: CompParams<ViewReturn>) {
+  constructor(params: CompParams<JSONValue>) {
     super(params);
-    this.value = this.oldValueToNew(params.value) ?? this.getDefaultValue();
+    this.value = this.oldValueToNew(params.value as ViewReturn) ?? this.getDefaultValue();
   }
 
   protected abstract getDefaultValue(): ViewReturn;

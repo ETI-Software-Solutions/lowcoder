@@ -163,6 +163,7 @@ export const CompStateIcon: {
   rangeSlider: <RangeSliderCompIconSmall />,
   rating: <RatingCompIconSmall />,
   responsiveLayout: <ResponsiveLayoutCompIconSmall />,
+  maplibre: <GeoMapChartsCompIconSmall/>,
   codeEditor: <CodeEditorCompIconSmall/>,
   richTextEditor: <RichTextEditorCompIconSmall />,
   scanner: <ScannerCompIconSmall />,

@@ -1,6 +1,8 @@
 import { trans } from "i18n";
 import { ControlParams } from "./controlParams";
 import { dropdownAbstractControl } from "./dropdownControl";
+import { CompParams } from "lowcoder-core";
+import { JSONValue } from "util/jsonTypes";
 
 const heightOptions = [
   {
@@ -15,6 +17,10 @@ const heightOptions = [
 
 const AutoHeightTmpControl = dropdownAbstractControl(heightOptions, "auto");
 export class AutoHeightControl extends AutoHeightTmpControl {
+  constructor(params: CompParams<JSONValue>) {
+    super(params as any);
+  }
+
   override oldValueToNew(value: any) {
     // compatible with old data
     if (typeof value === "boolean") {

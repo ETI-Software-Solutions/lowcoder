@@ -3097,6 +3097,129 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mapbox/jsonlint-lines-primitives@npm:^2.0.2, @mapbox/jsonlint-lines-primitives@npm:~2.0.2":
+  version: 2.0.2
+  resolution: "@mapbox/jsonlint-lines-primitives@npm:2.0.2"
+  checksum: 4eb31edd3ccff530f7b687ddc6d813d6e24fc66e9a563460882e7861b49f9331c5ded6fd7e927b37affbbd98f83bff1f7b916119044f1931df03c6ffedba2cfb
+  languageName: node
+  linkType: hard
+
+"@mapbox/point-geometry@npm:^1.1.0, @mapbox/point-geometry@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "@mapbox/point-geometry@npm:1.1.0"
+  checksum: b69c136566b08921286b2b5abcf35a1a015ce106af02c6914a74acff57b381e2fe167ce11268d5c26739f044813ae43c0581d3dbd7eb9b68bc9d7147ad74d6f1
+  languageName: node
+  linkType: hard
+
+"@mapbox/tiny-sdf@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@mapbox/tiny-sdf@npm:2.0.7"
+  checksum: f15669007cec1b6e53dd1bd856152794246fda30ade1347123ddb39fa743aa4adf3cd2610fcb881318ae73a277488cd6c12dfd24c333f4be0fc75d19ab66daab
+  languageName: node
+  linkType: hard
+
+"@mapbox/unitbezier@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@mapbox/unitbezier@npm:0.0.1"
+  checksum: bf104c85dbff37bf47d3217d9457a3abbf23714f78fefadea64e56bdc7c538491b626166809ef28db134f09baccd6ca3df6988a6422df90d8d0c9a23b0686043
+  languageName: node
+  linkType: hard
+
+"@mapbox/vector-tile@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@mapbox/vector-tile@npm:2.0.4"
+  dependencies:
+    "@mapbox/point-geometry": ~1.1.0
+    "@types/geojson": ^7946.0.16
+    pbf: ^4.0.1
+  checksum: 44ec95f883563340daa28d4d0207901d270ce157914241fb5ebaef8bd6a44f3bd5ae2612a965d805778f26eb4fc3b806060c34f473220c5fbb96d9957673c6cb
+  languageName: node
+  linkType: hard
+
+"@mapbox/whoots-js@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@mapbox/whoots-js@npm:3.1.0"
+  checksum: c1837c04effd205b207f441356d952eae7e8aad6c58f7c4900de50318c2147cf175936fc9434f20dfa409f9e6a78ec604d61e70c1c20572db0cc7655fbb65f50
+  languageName: node
+  linkType: hard
+
+"@maplibre/geojson-vt@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "@maplibre/geojson-vt@npm:5.0.4"
+  checksum: 134d1c47538e372d9f2a09522ae74ff9d26c77ec5437f83f583327f1d95946ae791bc33b6a0aca03a891a9be7400ded776578696b42c191687e2c5a71c6dfe32
+  languageName: node
+  linkType: hard
+
+"@maplibre/geojson-vt@npm:^6.0.4":
+  version: 6.0.4
+  resolution: "@maplibre/geojson-vt@npm:6.0.4"
+  dependencies:
+    kdbush: ^4.0.2
+  checksum: c755809596f5ddbfa3c51e2ac7eaab98c82a0d80ba116312c6c18072a609c2708e5744448f8ab9fe27c3a5ff29be2989265f957bfe24661cddf16331c3677c5f
+  languageName: node
+  linkType: hard
+
+"@maplibre/maplibre-gl-style-spec@npm:^19.2.1":
+  version: 19.3.3
+  resolution: "@maplibre/maplibre-gl-style-spec@npm:19.3.3"
+  dependencies:
+    "@mapbox/jsonlint-lines-primitives": ~2.0.2
+    "@mapbox/unitbezier": ^0.0.1
+    json-stringify-pretty-compact: ^3.0.0
+    minimist: ^1.2.8
+    rw: ^1.3.3
+    sort-object: ^3.0.3
+  bin:
+    gl-style-format: dist/gl-style-format.mjs
+    gl-style-migrate: dist/gl-style-migrate.mjs
+    gl-style-validate: dist/gl-style-validate.mjs
+  checksum: b83f539f0df6cb6e4b06d78b05a6bc67e17a31d0999a3faf6fe0585e0b934b31ea5932ed1cf9773249a3a557cf5caf35221b7e7ca65e5c74737eff799f80d386
+  languageName: node
+  linkType: hard
+
+"@maplibre/maplibre-gl-style-spec@npm:^24.7.0":
+  version: 24.7.0
+  resolution: "@maplibre/maplibre-gl-style-spec@npm:24.7.0"
+  dependencies:
+    "@mapbox/jsonlint-lines-primitives": ~2.0.2
+    "@mapbox/unitbezier": ^0.0.1
+    json-stringify-pretty-compact: ^4.0.0
+    minimist: ^1.2.8
+    quickselect: ^3.0.0
+    rw: ^1.3.3
+    tinyqueue: ^3.0.0
+  bin:
+    gl-style-format: dist/gl-style-format.mjs
+    gl-style-migrate: dist/gl-style-migrate.mjs
+    gl-style-validate: dist/gl-style-validate.mjs
+  checksum: 5e01bf5ed09d1b23a757bf33a5916e8b4b3d4cb4d32205078eb5edcd29df2f0b1b6b4e74b3f5bdc93426967863f32d053b123217ee74df68ba1b48c4c774332f
+  languageName: node
+  linkType: hard
+
+"@maplibre/mlt@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "@maplibre/mlt@npm:1.1.8"
+  dependencies:
+    "@mapbox/point-geometry": ^1.1.0
+  checksum: 136c97da344bad1cd4105042163c509e9466f5e2849ea0d0035365cf2700e6652dd0cf5def650d388ca8ffb1ec11fc0881c68966ded103e92a6a5fc26144f3cc
+  languageName: node
+  linkType: hard
+
+"@maplibre/vt-pbf@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@maplibre/vt-pbf@npm:4.3.0"
+  dependencies:
+    "@mapbox/point-geometry": ^1.1.0
+    "@mapbox/vector-tile": ^2.0.4
+    "@maplibre/geojson-vt": ^5.0.4
+    "@types/geojson": ^7946.0.16
+    "@types/supercluster": ^7.1.3
+    pbf: ^4.0.1
+    supercluster: ^8.0.1
+  checksum: 5a4df68416fa73047e3380e0a7a48a96f7d571275c3395d53cc7bc1ce02eef1a3a2234453032640323950c7aab7fb2cf53633366b477f065fb8bd3ee4986926e
+  languageName: node
+  linkType: hard
+
 "@monaco-editor/loader@npm:^1.5.0":
   version: 1.5.0
   resolution: "@monaco-editor/loader@npm:1.5.0"
@@ -4645,6 +4768,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/geojson@npm:*, @types/geojson@npm:^7946.0.16":
+  version: 7946.0.16
+  resolution: "@types/geojson@npm:7946.0.16"
+  checksum: d66e5e023f43b3e7121448117af1930af7d06410a32a585a8bc9c6bb5d97e0d656cd93d99e31fa432976c32e98d4b780f82bf1fd1acd20ccf952eb6b8e39edf2
+  languageName: node
+  linkType: hard
+
 "@types/glob@npm:~7.2.0":
   version: 7.2.0
   resolution: "@types/glob@npm:7.2.0"
@@ -5187,6 +5317,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/supercluster@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "@types/supercluster@npm:7.1.3"
+  dependencies:
+    "@types/geojson": "*"
+  checksum: 724188fb6ebdf0835821559da5480e5951c3e51afa86fcf83f5bf6984b89652f947081a3f6835cb082a6865fe5f1f8f667e92346f237d3518c2159121bb7c5cc
+  languageName: node
+  linkType: hard
+
 "@types/tern@npm:0.23.4":
   version: 0.23.4
   resolution: "@types/tern@npm:0.23.4"
@@ -5419,6 +5558,36 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
   checksum: d43a2296e536ea8e4885ca082b7c554eabb0e19bb7f89b5db96e0511712c849db879de64c2746c94e3c9a5032e8918c90ace67fc023c754034d75b2ea3b727c4
+  languageName: node
+  linkType: hard
+
+"@vis.gl/react-mapbox@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@vis.gl/react-mapbox@npm:8.1.0"
+  peerDependencies:
+    mapbox-gl: ">=3.5.0"
+    react: ">=16.3.0"
+    react-dom: ">=16.3.0"
+  peerDependenciesMeta:
+    mapbox-gl:
+      optional: true
+  checksum: aa1ef25870d8f6e326064897c81c50003b2006390ce2d769272f2b73e6032c95db0ba2200efd0162418b3633c71cc7854eee36b2fd790b4b91d82a5b0a3cd217
+  languageName: node
+  linkType: hard
+
+"@vis.gl/react-maplibre@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@vis.gl/react-maplibre@npm:8.1.0"
+  dependencies:
+    "@maplibre/maplibre-gl-style-spec": ^19.2.1
+  peerDependencies:
+    maplibre-gl: ">=4.0.0"
+    react: ">=16.3.0"
+    react-dom: ">=16.3.0"
+  peerDependenciesMeta:
+    maplibre-gl:
+      optional: true
+  checksum: c3bb527f22b922097e1b867fc4d7d3f3ac3786adae808cc1a16946c33236b1ebb61809531e165322e0dc4b6fec1bff01d2d56718edc44741a569c98240707ba2
   languageName: node
   linkType: hard
 
@@ -6195,6 +6364,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"arr-union@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "arr-union@npm:3.1.0"
+  checksum: b5b0408c6eb7591143c394f3be082fee690ddd21f0fdde0a0a01106799e847f67fcae1b7e56b0a0c173290e29c6aca9562e82b300708a268bc8f88f3d6613cb9
+  languageName: node
+  linkType: hard
+
 "array-buffer-byte-length@npm:^1.0.0, array-buffer-byte-length@npm:^1.0.1":
   version: 1.0.1
   resolution: "array-buffer-byte-length@npm:1.0.1"
@@ -6384,6 +6560,13 @@ __metadata:
     object.assign: ^4.1.4
     util: ^0.12.5
   checksum: 1ed1cabba9abe55f4109b3f7292b4e4f3cf2953aad8dc148c0b3c3bd676675c31b1abb32ef563b7d5a19d1715bf90d1e5f09fad2a4ee655199468902da80f7c2
+  languageName: node
+  linkType: hard
+
+"assign-symbols@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "assign-symbols@npm:1.0.0"
+  checksum: c0eb895911d05b6b2d245154f70461c5e42c107457972e5ebba38d48967870dee53bcdf6c7047990586daa80fab8dab3cc6300800fbd47b454247fdedd859a2c
   languageName: node
   linkType: hard
 
@@ -7040,6 +7223,25 @@ __metadata:
   version: 3.1.2
   resolution: "bytes@npm:3.1.2"
   checksum: e4bcd3948d289c5127591fbedf10c0b639ccbf00243504e4e127374a15c3bc8eed0d28d4aaab08ff6f1cf2abc0cce6ba3085ed32f4f90e82a5683ce0014e1b6e
+  languageName: node
+  linkType: hard
+
+"bytewise-core@npm:^1.2.2":
+  version: 1.2.3
+  resolution: "bytewise-core@npm:1.2.3"
+  dependencies:
+    typewise-core: ^1.2
+  checksum: e0d28fb7ff5bb6fd9320eef31c6b37e98da3b9a24d9893e2c17e0ee544457e0c76c2d3fc642c99d82daa0f18dcd49e7dce8dcc338711200e9ced79107cb78e8e
+  languageName: node
+  linkType: hard
+
+"bytewise@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "bytewise@npm:1.1.0"
+  dependencies:
+    bytewise-core: ^1.2.2
+    typewise: ^1.0.3
+  checksum: 20d7387ecf8c29adc4740e626fb02eaa27f34ae4c5ca881657d403e792730c0625ba4fed824462b3ddb7d3ebe41b7abbfe24f1cd3bf07cecc5a631f154d2d8d2
   languageName: node
   linkType: hard
 
@@ -9147,6 +9349,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"earcut@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "earcut@npm:3.0.2"
+  checksum: b4c8965e2e20cc3e6679f19e3c4bca4fe3c72bdf1b463430e3cefb2a016e50bb829a4ce570c289dec966235eb891c430a96b179e6b44bc25e1f38f0839b6527b
+  languageName: node
+  linkType: hard
+
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -10217,6 +10426,25 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"extend-shallow@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "extend-shallow@npm:2.0.1"
+  dependencies:
+    is-extendable: ^0.1.0
+  checksum: 8fb58d9d7a511f4baf78d383e637bd7d2e80843bd9cd0853649108ea835208fb614da502a553acc30208e1325240bb7cc4a68473021612496bb89725483656d8
+  languageName: node
+  linkType: hard
+
+"extend-shallow@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "extend-shallow@npm:3.0.2"
+  dependencies:
+    assign-symbols: ^1.0.0
+    is-extendable: ^1.0.1
+  checksum: a920b0cd5838a9995ace31dfd11ab5e79bf6e295aa566910ce53dff19f4b1c0fda2ef21f26b28586c7a2450ca2b42d97bd8c0f5cec9351a819222bf861e02461
+  languageName: node
+  linkType: hard
+
 "extend@npm:^3.0.0, extend@npm:^3.0.2, extend@npm:~3.0.2":
   version: 3.0.2
   resolution: "extend@npm:3.0.2"
@@ -10792,6 +11020,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"get-value@npm:^2.0.2, get-value@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "get-value@npm:2.0.6"
+  checksum: 5c3b99cb5398ea8016bf46ff17afc5d1d286874d2ad38ca5edb6e87d75c0965b0094cb9a9dddef2c59c23d250702323539a7fbdd870620db38c7e7d7ec87c1eb
+  languageName: node
+  linkType: hard
+
 "getpass@npm:^0.1.1":
   version: 0.1.7
   resolution: "getpass@npm:0.1.7"
@@ -10805,6 +11040,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   version: 5.5.1
   resolution: "github-markdown-css@npm:5.5.1"
   checksum: ed04423a85e83d75baa128cea2ddcd2e688bc73a92abf146f9b9cc20546db40c67c9fadf150c5289d4c89b8f76bf11fb3c312ee8161398642be8298eeaa5a4be
+  languageName: node
+  linkType: hard
+
+"gl-matrix@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "gl-matrix@npm:3.4.4"
+  checksum: 0ad438e94b67e9e8c589c170776b0aece1f572c1b0b86426f058cb07d3683ff95c1097542b7f70add67b8aa8c7e3cf14d5410517b50459f34c8a4eaff810ace1
   languageName: node
   linkType: hard
 
@@ -12002,6 +12244,22 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"is-extendable@npm:^0.1.0, is-extendable@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "is-extendable@npm:0.1.1"
+  checksum: 3875571d20a7563772ecc7a5f36cb03167e9be31ad259041b4a8f73f33f885441f778cee1f1fe0085eb4bc71679b9d8c923690003a36a6a5fdf8023e6e3f0672
+  languageName: node
+  linkType: hard
+
+"is-extendable@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "is-extendable@npm:1.0.1"
+  dependencies:
+    is-plain-object: ^2.0.4
+  checksum: db07bc1e9de6170de70eff7001943691f05b9d1547730b11be01c0ebfe67362912ba743cf4be6fd20a5e03b4180c685dad80b7c509fe717037e3eee30ad8e84f
+  languageName: node
+  linkType: hard
+
 "is-extglob@npm:^2.1.1":
   version: 2.1.1
   resolution: "is-extglob@npm:2.1.1"
@@ -12178,7 +12436,7 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
-"is-plain-object@npm:^2.0.4":
+"is-plain-object@npm:^2.0.3, is-plain-object@npm:^2.0.4":
   version: 2.0.4
   resolution: "is-plain-object@npm:2.0.4"
   dependencies:
@@ -13239,6 +13497,20 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"json-stringify-pretty-compact@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "json-stringify-pretty-compact@npm:3.0.0"
+  checksum: 01ab5c5c8260299414868d96db97f53aef93c290fe469edd9a1363818e795006e01c952fa2fd7b47cbbab506d5768998eccc25e1da4fa2ccfebd1788c6098791
+  languageName: node
+  linkType: hard
+
+"json-stringify-pretty-compact@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "json-stringify-pretty-compact@npm:4.0.0"
+  checksum: a10d5c423e467872994a49c5c1b56b073f277ce02d899cf567fc625f3783b89406bee6408bfb3b4bdeeff509b6a562f5259227e26754a6186f721809ca895f0c
+  languageName: node
+  linkType: hard
+
 "json-stringify-safe@npm:~5.0.1":
   version: 5.0.1
   resolution: "json-stringify-safe@npm:5.0.1"
@@ -13327,6 +13599,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   bin:
     katex: cli.js
   checksum: 108e9d810e17840c43eef8d46171096f4cc97852bfd1e2dd1890d9b3435846816e3e98678a31d38bd064eb97eea83b18ff224cb65d5f9511b54ce7ff4359b591
+  languageName: node
+  linkType: hard
+
+"kdbush@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "kdbush@npm:4.0.2"
+  checksum: 6782ef2cdaec9322376b9955a16b0163beda0cefa2f87da76e8970ade2572d8b63bec915347aaeac609484b0c6e84d7b591f229ef353b68b460238095bacde2d
   languageName: node
   linkType: hard
 
@@ -13981,11 +14260,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
     jest-environment-jsdom: ^29.5.0
     lint-staged: ^13.0.1
     lowcoder-cli: "workspace:^"
+    maplibre-gl: ^5.21.1
     monaco-editor: ^0.52.2
     mq-polyfill: ^1.1.8
     number-precision: ^1.6.0
     prettier: ^3.1.0
     react-countup: ^6.5.3
+    react-map-gl: ^8.1.0
     react-player: ^2.11.0
     resize-observer-polyfill: ^1.5.1
     rimraf: ^3.0.2
@@ -14362,6 +14643,33 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   dependencies:
     tmpl: 1.0.5
   checksum: b38a025a12c8146d6eeea5a7f2bf27d51d8ad6064da8ca9405fcf7bf9b54acd43e3b30ddd7abb9b1bfa4ddb266019133313482570ddb207de568f71ecfcf6060
+  languageName: node
+  linkType: hard
+
+"maplibre-gl@npm:^5.21.1":
+  version: 5.21.1
+  resolution: "maplibre-gl@npm:5.21.1"
+  dependencies:
+    "@mapbox/jsonlint-lines-primitives": ^2.0.2
+    "@mapbox/point-geometry": ^1.1.0
+    "@mapbox/tiny-sdf": ^2.0.7
+    "@mapbox/unitbezier": ^0.0.1
+    "@mapbox/vector-tile": ^2.0.4
+    "@mapbox/whoots-js": ^3.1.0
+    "@maplibre/geojson-vt": ^6.0.4
+    "@maplibre/maplibre-gl-style-spec": ^24.7.0
+    "@maplibre/mlt": ^1.1.8
+    "@maplibre/vt-pbf": ^4.3.0
+    "@types/geojson": ^7946.0.16
+    earcut: ^3.0.2
+    gl-matrix: ^3.4.4
+    kdbush: ^4.0.2
+    murmurhash-js: ^1.0.0
+    pbf: ^4.0.1
+    potpack: ^2.1.0
+    quickselect: ^3.0.0
+    tinyqueue: ^3.0.0
+  checksum: fe10b59977b8c41d17e41dd0c35169fff060e387644107cc4361a93476c04ae60b7eb9357316b544c9287d7afde1f6679e7a6e625d0134f010cbcf28a332ca68
   languageName: node
   linkType: hard
 
@@ -15435,7 +15743,7 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 75a6d645fb122dad29c06a7597bddea977258957ed88d7a6df59b5cd3fe4a527e253e9bbf2e783e4b73657f9098b96a5fe96ab8a113655d4109108577ecf85b0
@@ -15609,6 +15917,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   bin:
     multicast-dns: cli.js
   checksum: 00b8a57df152d4cd0297946320a94b7c3cdf75a46a2247f32f958a8927dea42958177f9b7fdae69fab2e4e033fb3416881af1f5e9055a3e1542888767139e2fb
+  languageName: node
+  linkType: hard
+
+"murmurhash-js@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "murmurhash-js@npm:1.0.0"
+  checksum: 083cea92a11bc9eb25be1446fc92eded3f49731bc1ad34fa8023afd68c234d1dd59458d70eb20e667b1383bedeeb8dfb1a16c89913b6ffe3584fd22fb598739d
   languageName: node
   linkType: hard
 
@@ -16451,6 +16766,17 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"pbf@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "pbf@npm:4.0.1"
+  dependencies:
+    resolve-protobuf-schema: ^2.1.0
+  bin:
+    pbf: bin/pbf
+  checksum: c8a553847b3932803f63f62adece39da7b938f29bab97eb7e62f37cde96207a9c962ba92e26af3a7cad28df53e5a0fbcbca9aab985c32eb0553cbee5d4becfef
+  languageName: node
+  linkType: hard
+
 "pbkdf2@npm:^3.0.3, pbkdf2@npm:^3.1.2":
   version: 3.1.2
   resolution: "pbkdf2@npm:3.1.2"
@@ -16639,6 +16965,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"potpack@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "potpack@npm:2.1.0"
+  checksum: 5aa375a81192fe1dd03d201ae5a597faf30e2ee9366e9368d662637ce577586e7613f37ec366d66d0ae79197e1f9401238def285ed8d80ac553c24b90e6401a9
+  languageName: node
+  linkType: hard
+
 "preact@npm:~10.12.1":
   version: 10.12.1
   resolution: "preact@npm:10.12.1"
@@ -16763,6 +17096,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   version: 6.5.0
   resolution: "property-information@npm:6.5.0"
   checksum: 6e55664e2f64083b715011e5bafaa1e694faf36986c235b0907e95d09259cc37c38382e3cc94a4c3f56366e05336443db12c8a0f0968a8c0a1b1416eebfc8f53
+  languageName: node
+  linkType: hard
+
+"protocol-buffers-schema@npm:^3.3.1":
+  version: 3.6.0
+  resolution: "protocol-buffers-schema@npm:3.6.0"
+  checksum: 8713b5770f6745ddbcdf3bbd03ee020624d506233bb567927a6615a6f69a5bd620a5f49597f34f4115792b853a4c9cb9e2d5d6b930a1c04bf198023e45c1c349
   languageName: node
   linkType: hard
 
@@ -16898,6 +17238,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
+  languageName: node
+  linkType: hard
+
+"quickselect@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "quickselect@npm:3.0.0"
+  checksum: 8f72bedb8bb14bce5c3767c55f567bc296fa3ca9d98ba385e3867e434463bc633feee1eddf3dfec17914b7e88feeb08c7b313cf47114a8ff11bf964f77f51cfc
   languageName: node
   linkType: hard
 
@@ -17841,6 +18188,26 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"react-map-gl@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "react-map-gl@npm:8.1.0"
+  dependencies:
+    "@vis.gl/react-mapbox": 8.1.0
+    "@vis.gl/react-maplibre": 8.1.0
+  peerDependencies:
+    mapbox-gl: ">=1.13.0"
+    maplibre-gl: ">=1.13.0"
+    react: ">=16.3.0"
+    react-dom: ">=16.3.0"
+  peerDependenciesMeta:
+    mapbox-gl:
+      optional: true
+    maplibre-gl:
+      optional: true
+  checksum: 302e29eb8c225a4e786e707f7fa5836a90d0c2aac8f3318007e5882e91ef1ce6a9c5652ad247fcb20b1e7c1d46b084e0c2dd5dea9884d411509e2c1e60bd7181
+  languageName: node
+  linkType: hard
+
 "react-markdown@npm:^9.0.1":
   version: 9.0.1
   resolution: "react-markdown@npm:9.0.1"
@@ -18616,6 +18983,15 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"resolve-protobuf-schema@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "resolve-protobuf-schema@npm:2.1.0"
+  dependencies:
+    protocol-buffers-schema: ^3.3.1
+  checksum: 88fffab2a3757888884a36f9aa4e24be5186b01820a8c26297dc1ce406b9daf776594926bdf524c2c8e8e5b0aba8ac48362b6584cdecc9a7083215ebca01c599
+  languageName: node
+  linkType: hard
+
 "resolve.exports@npm:^2.0.0":
   version: 2.0.2
   resolution: "resolve.exports@npm:2.0.2"
@@ -19030,7 +19406,7 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
-"rw@npm:1":
+"rw@npm:1, rw@npm:^1.3.3":
   version: 1.3.3
   resolution: "rw@npm:1.3.3"
   checksum: c20d82421f5a71c86a13f76121b751553a99cd4a70ea27db86f9b23f33db941f3f06019c30f60d50c356d0bd674c8e74764ac146ea55e217c091bde6fba82aa3
@@ -19338,6 +19714,18 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"set-value@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "set-value@npm:2.0.1"
+  dependencies:
+    extend-shallow: ^2.0.1
+    is-extendable: ^0.1.1
+    is-plain-object: ^2.0.3
+    split-string: ^3.0.1
+  checksum: 09a4bc72c94641aeae950eb60dc2755943b863780fcc32e441eda964b64df5e3f50603d5ebdd33394ede722528bd55ed43aae26e9df469b4d32e2292b427b601
+  languageName: node
+  linkType: hard
+
 "setimmediate@npm:^1.0.4, setimmediate@npm:^1.0.5":
   version: 1.0.5
   resolution: "setimmediate@npm:1.0.5"
@@ -19589,6 +19977,34 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"sort-asc@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "sort-asc@npm:0.2.0"
+  checksum: b3610ab695dc8b2cba1c3e6ead06ce97a41f013ed0a002ff7a0d2a39ca297fd2f58c92d3de67dda3a9313ecb1073de4eacc30da3a740ff8d57eb668c9bb151bd
+  languageName: node
+  linkType: hard
+
+"sort-desc@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "sort-desc@npm:0.2.0"
+  checksum: fb2c02ea38815c79c0127d014f18926a473a1988c01f4c00de467584b99fc7e9f6e4f61c8386f4c2ac3501c60842931c5a499330b3086be6d8cff4d0b8602bed
+  languageName: node
+  linkType: hard
+
+"sort-object@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "sort-object@npm:3.0.3"
+  dependencies:
+    bytewise: ^1.1.0
+    get-value: ^2.0.2
+    is-extendable: ^0.1.1
+    sort-asc: ^0.2.0
+    sort-desc: ^0.2.0
+    union-value: ^1.0.1
+  checksum: 381a6b6fe2309d400bd6ae3a8d0188b2b3b3855345d16d953b4bb5875d28fd5512501c85bd4eb951543056cd3095ff8e197ab3efc11389dcfa0e3334bf4a23a5
+  languageName: node
+  linkType: hard
+
 "source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2, source-map-js@npm:^1.2.0":
   version: 1.2.0
   resolution: "source-map-js@npm:1.2.0"
@@ -19675,6 +20091,15 @@ coolshapes-react@lowcoder-org/coolshapes-react:
     select-hose: ^2.0.0
     spdy-transport: ^3.0.0
   checksum: 2c739d0ff6f56ad36d2d754d0261d5ec358457bea7cbf77b1b05b0c6464f2ce65b85f196305f50b7bd9120723eb94bae9933466f28e67e5cd8cde4e27f1d75f8
+  languageName: node
+  linkType: hard
+
+"split-string@npm:^3.0.1":
+  version: 3.1.0
+  resolution: "split-string@npm:3.1.0"
+  dependencies:
+    extend-shallow: ^3.0.0
+  checksum: ae5af5c91bdc3633628821bde92fdf9492fa0e8a63cf6a0376ed6afde93c701422a1610916f59be61972717070119e848d10dfbbd5024b7729d6a71972d2a84c
   languageName: node
   linkType: hard
 
@@ -20151,6 +20576,15 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"supercluster@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "supercluster@npm:8.0.1"
+  dependencies:
+    kdbush: ^4.0.2
+  checksum: 39d141f768a511efa53260252f9dab9a2ce0228b334e55482c8d3019e151932f05e1a9a0252d681737651b13c741c665542a6ddb40ec27de96159ea7ad41f7f4
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.3.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -20416,6 +20850,13 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   version: 1.4.2
   resolution: "tinycolor2@npm:1.4.2"
   checksum: 57ed262e08815a4ab0ed933edafdbc6555a17081781766149813b44a080ecbe58b3ee281e81c0e75b42e4d41679f138cfa98eabf043f829e0683c04adb12c031
+  languageName: node
+  linkType: hard
+
+"tinyqueue@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "tinyqueue@npm:3.0.0"
+  checksum: 49a5454935991685512e2e1848e423fce1953b95e0fe0456b9a50d07ff0bfbf4c2b1a1682191dc2d520b37c554ef518ad225133cea9434eb9cfebf811fc61e71
   languageName: node
   linkType: hard
 
@@ -20986,6 +21427,22 @@ coolshapes-react@lowcoder-org/coolshapes-react:
   languageName: node
   linkType: hard
 
+"typewise-core@npm:^1.2, typewise-core@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "typewise-core@npm:1.2.0"
+  checksum: c21e83544546d1aba2f17377c25ae0eb571c2153b2e3705932515bef103dbe43e05d2286f238ad139341b1000da40583115a44cb5e69a2ef408572b13dab844b
+  languageName: node
+  linkType: hard
+
+"typewise@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "typewise@npm:1.0.3"
+  dependencies:
+    typewise-core: ^1.2.0
+  checksum: eb3452b1387df8bf8e3b620720d240425a50ce402d7c064c21ac4b5d88c551ee4d1f26cd649b8a17a6d06f7a3675733de841723f8e06bb3edabfeacc4924af4a
+  languageName: node
+  linkType: hard
+
 "ua-parser-js@npm:^0.7.34":
   version: 0.7.37
   resolution: "ua-parser-js@npm:0.7.37"
@@ -21084,6 +21541,18 @@ coolshapes-react@lowcoder-org/coolshapes-react:
     trough: ^2.0.0
     vfile: ^6.0.0
   checksum: b3bf7fd6f568cc261e074dae21188483b0f2a8ab858d62e6e85b75b96cc655f59532906ae3c64d56a9b257408722d71f1d4135292b3d7ee02907c8b592fb3cf0
+  languageName: node
+  linkType: hard
+
+"union-value@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "union-value@npm:1.0.1"
+  dependencies:
+    arr-union: ^3.1.0
+    get-value: ^2.0.6
+    is-extendable: ^0.1.1
+    set-value: ^2.0.1
+  checksum: a3464097d3f27f6aa90cf103ed9387541bccfc006517559381a10e0dffa62f465a9d9a09c9b9c3d26d0f4cbe61d4d010e2fbd710fd4bf1267a768ba8a774b0ba
   languageName: node
   linkType: hard
 

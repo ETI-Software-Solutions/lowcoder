@@ -15,7 +15,9 @@ import {
   AutoHeightControl,
   BoolControl,
   eventHandlerControl,
+  changeChildAction,
   ToConstructor,
+  toJSONObject,
 } from "lowcoder-sdk";
 import Map, { FullscreenControl, GeolocateControl, Layer, NavigationControl, Popup, ScaleControl, Source, MapRef } from 'react-map-gl/maplibre';
 import maplibregl from "maplibre-gl";
@@ -293,6 +295,7 @@ let MapLibreTmpComp = (function () {
     ].sort((a, b) => a.label.localeCompare(b.label));
 
     const DataControl = jsonControl(toJSONObjectArray, []);
+    const PopupDataControl = jsonControl(toJSONObject, {});
     const MapStyleControl = withDefault(StringControl, defaultValues.mapStyleLabel) as typeof StringControl;
     const BoundariesControl = dropdownControl(BOUNDARIES_OPTIONS, "USA");
 
@@ -306,7 +309,7 @@ let MapLibreTmpComp = (function () {
       bearing: InstanceType<typeof NumberControl>;
       pitch: InstanceType<typeof NumberControl>;
       hidePopup: InstanceType<typeof BoolControl>;
-      popupDataState: InstanceType<ReturnType<typeof jsonControl>>;
+      popupData: InstanceType<typeof PopupDataControl>;
       onEvent: InstanceType<typeof MapEventControl>;
     };
 
@@ -326,11 +329,11 @@ let MapLibreTmpComp = (function () {
     bearing: withDefault(NumberControl, 0),
     pitch: withDefault(NumberControl, 0),
     hidePopup: withDefault(BoolControl, false),
-    popupDataState: jsonControl(() => ({}), {}),
+    popupData: PopupDataControl,
     onEvent: MapEventControl,
   };
   
-  return new UICompBuilder(childrenMap, (props) => {
+  return new UICompBuilder(childrenMap, (props, dispatch) => {
     const { ref: conRef, height: containerHeight } = useResizeDetector({
       onResize: () => mapRef.current?.resize(),
       refreshMode: "debounce"
@@ -409,7 +412,6 @@ let MapLibreTmpComp = (function () {
 
       if (unclusteredFeatures.length > 0) {
         const feature    = unclusteredFeatures[0];
-        const geometry   = feature.geometry;
         const properties = feature.properties || {};
 
         setPopupData(properties);
@@ -417,13 +419,9 @@ let MapLibreTmpComp = (function () {
         setPopupToTopRight();
 
         props.onEvent("click");
-        (props as any).popupDataState_dispatch?.(properties);
+        dispatch(changeChildAction("popupData", JSON.stringify(properties), false));
       }
     }, [setPopupToTopRight, props]);
-
-    useEffect(() => {
-      (props as any).onPopupDataChange?.(popupData);
-    }, [popupData]);
 
     useEffect(() => {
       if (isPopupVisible) {
@@ -794,7 +792,7 @@ export const MaplibreComp = withExposingConfigs(MapLibreTmpComp, [
   new NameConfig("bearing", trans("maplibre.properties.bearing")),
   new NameConfig("pitch", trans("maplibre.properties.pitch")),
   new NameConfig("hidePopup",     trans("maplibre.properties.hidePopup")),
-  new NameConfig("popupDataState",trans("maplibre.properties.popupDataState")),
+  new NameConfig("popupData",trans("maplibre.properties.popupData")),
 ]);
 
 export default MaplibreComp;
